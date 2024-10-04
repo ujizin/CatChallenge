@@ -1,4 +1,4 @@
-package com.ujizin.catchallenge.ui.theme
+package com.ujizin.catchallenge.core.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

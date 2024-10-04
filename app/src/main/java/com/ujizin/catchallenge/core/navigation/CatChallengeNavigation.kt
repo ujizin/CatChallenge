@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ujizin.catchallenge.core.navigation.destination.Destination
+import com.ujizin.catchallenge.feature.home.ui.HomeScreen
 
 @Composable
 fun CatChallengeNavigation(modifier: Modifier = Modifier) {
@@ -16,7 +17,7 @@ fun CatChallengeNavigation(modifier: Modifier = Modifier) {
         startDestination = Destination.Home,
     ) {
         composable<Destination.Home> {
-            // TODO to be implemented
+            HomeScreen()
         }
     }
 }

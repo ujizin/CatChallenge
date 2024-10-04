@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.ujizin.catchallenge.core.navigation.CatChallengeNavigation
 import com.ujizin.catchallenge.ui.theme.CatChallengeTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CatChallengeTheme {
-                // TODO To be implemented
+                CatChallengeNavigation()
             }
         }
     }

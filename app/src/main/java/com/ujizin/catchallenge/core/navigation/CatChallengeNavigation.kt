@@ -22,7 +22,7 @@ fun CatChallengeNavigation(modifier: Modifier = Modifier) {
             val currentDestination by navController.currentBackStackEntryAsState()
             CatChallengeBottomNavigation(
                 currentDestination = currentDestination?.destination,
-                onBottomItemClick = navController::navigate
+                onBottomItemClick = navController::navigateToBottomDestination
             )
         }
     ) { innerPadding ->

@@ -21,7 +21,7 @@ import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 fun CatChallengeBottomNavigation(
     modifier: Modifier = Modifier,
     currentDestination: NavDestination?,
-    onBottomItemClick: (Destination) -> Unit,
+    onBottomItemClick: (BottomDestination) -> Unit,
 ) {
     NavigationBar(modifier = modifier) {
         val bottomDestinations = remember { BottomDestination.entries }
@@ -44,7 +44,7 @@ fun CatChallengeBottomNavigation(
 private fun RowScope.NavigationItem(
     bottomItem: BottomDestination,
     isSelected: Boolean,
-    onBottomItemClick: (Destination) -> Unit
+    onBottomItemClick: (BottomDestination) -> Unit
 ) {
     NavigationBarItem(
         label = {
@@ -58,7 +58,7 @@ private fun RowScope.NavigationItem(
         },
         alwaysShowLabel = isSelected,
         selected = isSelected,
-        onClick = { onBottomItemClick(bottomItem.destination) }
+        onClick = { onBottomItemClick(bottomItem) }
     )
 }
 

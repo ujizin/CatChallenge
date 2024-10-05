@@ -80,7 +80,8 @@ dependencies {
     ksp(libs.room.compiler)
 
     // Unit Test
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.unit.test)
+    testImplementation(libs.androidx.paging.testing.android)
 
     // UI Test
     androidTestImplementation(platform(libs.androidx.compose.bom))

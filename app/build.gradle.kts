@@ -76,6 +76,7 @@ dependencies {
 
     // Network
     implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization.converter)
     implementation(libs.ok.http)
 
     // Local

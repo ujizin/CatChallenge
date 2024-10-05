@@ -8,6 +8,8 @@ import com.ujizin.catchallenge.core.data.repository.model.Breed
 
 internal fun List<BreedResponse>.toEntity(): List<BreedEntity> = map(BreedResponse::toEntity)
 
+internal fun List<BreedEntity>.toDomain(): List<Breed> = map(BreedEntity::toDomain)
+
 internal fun BreedResponse.toEntity() = BreedEntity(
     id = id,
     name = name,

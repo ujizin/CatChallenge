@@ -59,6 +59,7 @@ dependencies {
     // UI
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.paging)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.material3)
@@ -73,6 +74,10 @@ dependencies {
     // Network
     implementation(libs.retrofit)
     implementation(libs.ok.http)
+
+    // Local
+    implementation(libs.bundles.room)
+    ksp(libs.room.compiler)
 
     // Unit Test
     testImplementation(libs.junit)

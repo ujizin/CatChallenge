@@ -11,5 +11,5 @@ data class BreedResponse(
     val temperament: String,
     val description: String,
     @SerialName("reference_image_id")
-    val imageId: String,
+    val imageId: ImageId,
 )

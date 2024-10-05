@@ -28,4 +28,5 @@ fun BreedEntity.toDomain() = Breed(
     imageUrl = imageUrl
 )
 
+// TODO add cdn url
 private fun ImageId.toImageUrl() = "${BuildConfig.BASE_URL}/v1/images/$this"

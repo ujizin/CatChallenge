@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
+import com.ujizin.catchallenge.core.data.remote.service.BreedService
 import com.ujizin.catchallenge.core.data.repository.dispatcher.IoDispatcher
 import com.ujizin.catchallenge.core.data.repository.mapper.toDomain
 import com.ujizin.catchallenge.core.data.repository.mediator.BreedRemoteMediator
@@ -17,15 +18,18 @@ import javax.inject.Singleton
 
 @Singleton
 class BreedRepository @Inject constructor(
-    private val remoteMediator: BreedRemoteMediator,
-    private val breedDao: BreedDao,
+    breedService: BreedService,
+    breedDao: BreedDao,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getPaging() = Pager(
+    val pager = Pager(
         config = PagingConfig(pageSize = BreedRemoteMediator.PAGE_SIZE),
-        remoteMediator = remoteMediator,
+        remoteMediator = BreedRemoteMediator(
+            breedService = breedService,
+            breedDao = breedDao,
+        ),
         pagingSourceFactory = breedDao::getBreedsPagingSource
     ).flow.map { pagingData ->
         pagingData.map(BreedEntity::toDomain)

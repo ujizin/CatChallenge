@@ -10,15 +10,15 @@ import retrofit2.http.Path
 
 interface FavoriteService {
 
-    @GET("/favourites")
+    @GET("v1/favourites")
     suspend fun getFavorites(): List<FavoriteResponse>
 
-    @POST("/favourites")
+    @POST("v1/favourites")
     suspend fun sendFavorite(
         @Body payload: FavoritePayload
     )
 
-    @DELETE("/favourites/{id}")
+    @DELETE("v1/favourites/{id}")
     suspend fun deleteFavorite(
         @Path("id") id: Int
     )

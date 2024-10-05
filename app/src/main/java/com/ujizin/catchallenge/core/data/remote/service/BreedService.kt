@@ -7,12 +7,12 @@ import retrofit2.http.Query
 
 interface BreedService {
 
-    @GET("/breeds")
+    @GET("v1/breeds")
     suspend fun getBreeds(
         @Query("limit") limit: Int,
         @Query("page") page: Int,
     ): List<BreedResponse>
 
-    @GET("/breeds/{id}")
+    @GET("v1/breeds/{id}")
     suspend fun getBreed(@Path("id") id: Int): BreedResponse
 }

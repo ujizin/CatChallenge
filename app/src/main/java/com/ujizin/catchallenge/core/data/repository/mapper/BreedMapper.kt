@@ -16,7 +16,7 @@ internal fun BreedResponse.toEntity() = BreedEntity(
     origin = origin,
     temperament = temperament,
     description = description,
-    imageUrl = imageId.toImageUrl(),
+    imageUrl = imageId?.toImageUrl(),
 )
 
 fun BreedEntity.toDomain() = Breed(

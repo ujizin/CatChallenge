@@ -13,5 +13,5 @@ data class BreedEntity(
     val temperament: String,
     val description: String,
     @ColumnInfo("image_url")
-    val imageUrl: String,
+    val imageUrl: String?,
 )

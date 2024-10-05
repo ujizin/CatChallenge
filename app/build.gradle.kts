@@ -62,6 +62,7 @@ dependencies {
     // UI
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.compose.paging)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.androidx.compose)

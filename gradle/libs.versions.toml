@@ -35,6 +35,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 androidx-compose-paging = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 androidx-paging-testing-android = { group = "androidx.paging", name = "paging-testing-android", version.ref = "pagingTestingAndroid" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }

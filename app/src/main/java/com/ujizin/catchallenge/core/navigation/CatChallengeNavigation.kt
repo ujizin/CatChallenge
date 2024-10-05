@@ -32,7 +32,11 @@ fun CatChallengeNavigation(modifier: Modifier = Modifier) {
             startDestination = Destination.Home,
         ) {
             composable<Destination.Home> {
-                HomeScreen()
+                HomeScreen(
+                    onNavigateToBreedDetail = { id ->
+                        // TODO to be implemented
+                    }
+                )
             }
             composable<Destination.Favorite> {
                 FavoriteScreen()

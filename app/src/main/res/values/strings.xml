@@ -3,4 +3,6 @@
 
     <string name="home_label">Home</string>
     <string name="favorite_label">Favorite</string>
+
+    <string name="search_label">Search</string>
 </resources>

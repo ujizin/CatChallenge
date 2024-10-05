@@ -6,14 +6,15 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
-import com.ujizin.catchallenge.core.data.remote.service.BreedService
+import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
 import com.ujizin.catchallenge.core.data.repository.mapper.toEntity
+import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class BreedRemoteMediator(
-    private val breedService: BreedService,
+    private val breedDataSource: BreedDataSource,
     private val breedDao: BreedDao,
 ) : RemoteMediator<Int, BreedEntity>() {
 
@@ -37,10 +38,10 @@ class BreedRemoteMediator(
         LoadType.PREPEND -> MediatorResult.Success(true)
         LoadType.APPEND -> try {
             currentPage = state.page
-            val breedResponse = breedService.getBreeds(
+            val breedResponse = breedDataSource.getBreeds(
                 limit = state.config.pageSize,
                 page = currentPage++
-            )
+            ).first()
 
             breedDao.withTransaction { upsertAll(breedResponse.toEntity()) }
 

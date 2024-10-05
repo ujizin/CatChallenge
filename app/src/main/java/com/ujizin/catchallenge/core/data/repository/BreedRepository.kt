@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
-import com.ujizin.catchallenge.core.data.remote.service.BreedService
+import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
 import com.ujizin.catchallenge.core.data.repository.dispatcher.IoDispatcher
 import com.ujizin.catchallenge.core.data.repository.mapper.toDomain
 import com.ujizin.catchallenge.core.data.repository.mediator.BreedRemoteMediator
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 
 @Singleton
 class BreedRepository @Inject constructor(
-    breedService: BreedService,
+    breedDataSource: BreedDataSource,
     breedDao: BreedDao,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
@@ -27,7 +27,7 @@ class BreedRepository @Inject constructor(
     val pager = Pager(
         config = PagingConfig(pageSize = BreedRemoteMediator.PAGE_SIZE),
         remoteMediator = BreedRemoteMediator(
-            breedService = breedService,
+            breedDataSource = breedDataSource,
             breedDao = breedDao,
         ),
         pagingSourceFactory = breedDao::getBreedsPagingSource

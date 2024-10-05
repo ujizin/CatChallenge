@@ -1,9 +1,7 @@
 package com.ujizin.catchallenge.core.data.repository.mapper
 
-import com.ujizin.catchallenge.BuildConfig
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
-import com.ujizin.catchallenge.core.data.remote.model.ImageId
 import com.ujizin.catchallenge.core.data.repository.model.Breed
 
 internal fun List<BreedResponse>.toEntity(): List<BreedEntity> = map(BreedResponse::toEntity)
@@ -16,7 +14,7 @@ internal fun BreedResponse.toEntity() = BreedEntity(
     origin = origin,
     temperament = temperament,
     description = description,
-    imageUrl = imageId?.toImageUrl(),
+    imageUrl = imageUrl,
 )
 
 fun BreedEntity.toDomain() = Breed(
@@ -27,6 +25,3 @@ fun BreedEntity.toDomain() = Breed(
     description = description,
     imageUrl = imageUrl
 )
-
-// TODO add cdn url
-private fun ImageId.toImageUrl() = "${BuildConfig.BASE_URL}/v1/images/$this"

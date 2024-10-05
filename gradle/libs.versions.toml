@@ -19,6 +19,7 @@ paging = "3.3.2"
 room = "2.6.1"
 mockk = "1.13.12"
 coroutines = "1.9.0"
+coil = "2.7.0"
 pagingTestingAndroid = "3.3.2"
 
 [libraries]
@@ -53,6 +54,7 @@ room-paging = { group = "androidx.room", name = "room-paging", version.ref = "ro
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [bundles]
 androidx-compose = [

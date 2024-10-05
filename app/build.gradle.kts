@@ -38,6 +38,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -59,6 +60,7 @@ dependencies {
 
     // Network
     implementation(libs.retrofit)
+    implementation(libs.ok.http)
 
     // Unit Test
     testImplementation(libs.junit)

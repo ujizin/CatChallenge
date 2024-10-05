@@ -9,11 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.ujizin.catchallenge.core.navigation.destination.BottomDestination
 import com.ujizin.catchallenge.core.navigation.destination.Destination
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 
 @Composable
 fun CatChallengeBottomNavigation(
@@ -58,4 +60,16 @@ private fun RowScope.NavigationItem(
         selected = isSelected,
         onClick = { onBottomItemClick(bottomItem.destination) }
     )
+}
+
+@Preview
+@Composable
+private fun CatChallengeBottomNavigationPreview() {
+    CatChallengeTheme {
+        CatChallengeBottomNavigation(
+            modifier = Modifier,
+            currentDestination = null,
+            onBottomItemClick = { },
+        )
+    }
 }

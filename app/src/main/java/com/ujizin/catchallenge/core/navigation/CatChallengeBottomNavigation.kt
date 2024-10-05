@@ -1,5 +1,10 @@
 package com.ujizin.catchallenge.core.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -11,10 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hasRoute
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.ujizin.catchallenge.core.navigation.destination.BottomDestination
-import com.ujizin.catchallenge.core.navigation.destination.Destination
+import com.ujizin.catchallenge.core.navigation.utils.hasRoute
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 
 @Composable
@@ -23,19 +26,26 @@ fun CatChallengeBottomNavigation(
     currentDestination: NavDestination?,
     onBottomItemClick: (BottomDestination) -> Unit,
 ) {
-    NavigationBar(modifier = modifier) {
-        val bottomDestinations = remember { BottomDestination.entries }
-        bottomDestinations.forEach { bottomItem ->
-            val isSelected = remember(currentDestination) {
-                currentDestination?.hierarchy?.any {
-                    it.hasRoute(bottomItem.destination::class)
-                } == true
+    val bottomDestinations = remember { BottomDestination.entries }
+    val isBottomDestination = remember(currentDestination) {
+        currentDestination.hasRoute(*bottomDestinations.toTypedArray())
+    }
+    AnimatedVisibility(
+        visible = isBottomDestination,
+        enter = fadeIn() + slideInVertically { it / 2 },
+        exit = fadeOut() + slideOutVertically { it / 2 }
+    ) {
+        NavigationBar(modifier = modifier) {
+            bottomDestinations.forEach { bottomItem ->
+                val isSelected = remember(currentDestination) {
+                    currentDestination.hasRoute(bottomItem)
+                }
+                NavigationItem(
+                    bottomItem = bottomItem,
+                    isSelected = isSelected,
+                    onBottomItemClick = onBottomItemClick,
+                )
             }
-            NavigationItem(
-                bottomItem = bottomItem,
-                isSelected = isSelected,
-                onBottomItemClick = onBottomItemClick,
-            )
         }
     }
 }

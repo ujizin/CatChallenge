@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.ujizin.catchallenge.core.ui.components.ImageCard
 import com.ujizin.catchallenge.core.ui.components.CenterLoading
-import com.ujizin.catchallenge.feature.home.ui.model.BreedUI
+import com.ujizin.catchallenge.core.ui.components.ImageCard
+import com.ujizin.catchallenge.core.ui.model.BreedUI
 
 @Composable
 internal fun CatPagerList(
     modifier: Modifier,
     pagingItems: LazyPagingItems<BreedUI>,
-    onBreedClick: (id: String) -> Unit,
+    onBreedClick: (BreedUI) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -34,7 +34,7 @@ internal fun CatPagerList(
             ImageCard(
                 name = item.name,
                 imageUrl = item.imageUrl,
-                onClick = { onBreedClick(item.id) }
+                onClick = { onBreedClick(item) }
             )
         }
 

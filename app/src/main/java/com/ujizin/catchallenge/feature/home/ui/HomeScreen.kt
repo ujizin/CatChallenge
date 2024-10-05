@@ -26,12 +26,12 @@ import com.ujizin.catchallenge.core.ui.components.TopAppBarContent
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 import com.ujizin.catchallenge.feature.home.HomeViewModel
 import com.ujizin.catchallenge.feature.home.ui.components.CatPagerList
-import com.ujizin.catchallenge.feature.home.ui.model.BreedUI
+import com.ujizin.catchallenge.core.ui.model.BreedUI
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun HomeScreen(
-    onNavigateToBreedDetail: (String) -> Unit,
+    onNavigateToBreedDetail: (BreedUI) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -42,7 +42,7 @@ fun HomeScreen(
         searchText = uiState.searchText,
         onEvent = { event ->
             when (event) {
-                is HomeUIEvent.OnBreedClick -> onNavigateToBreedDetail(event.id)
+                is HomeUIEvent.OnBreedClick -> onNavigateToBreedDetail(event.breed)
                 else -> viewModel.onEvent(event)
             }
         }

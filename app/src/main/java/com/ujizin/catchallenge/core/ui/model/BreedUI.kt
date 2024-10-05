@@ -1,5 +1,10 @@
-package com.ujizin.catchallenge.feature.home.ui.model
+package com.ujizin.catchallenge.core.ui.model
 
+import androidx.compose.runtime.Immutable
+import kotlinx.serialization.Serializable
+
+@Immutable
+@Serializable
 data class BreedUI(
     val id: String,
     val name: String,

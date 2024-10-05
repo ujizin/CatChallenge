@@ -41,7 +41,8 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 ok-http = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
-room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
@@ -60,6 +61,7 @@ androidx-compose-debug = [
 
 room = [
     "room",
+    "room-runtime",
     "room-paging"
 ]
 

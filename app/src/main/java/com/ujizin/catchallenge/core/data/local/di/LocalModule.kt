@@ -27,5 +27,5 @@ object LocalModule {
     @Provides
     fun provideBreedDao(
         database: CatChallengeDatabase
-    ): BreedDao = database.getBreedDao()
+    ): BreedDao = database.breedDao
 }

@@ -37,6 +37,7 @@ fun ImageCard(
     isFavorite: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    subLabel: String? = null,
     onFavoriteChanged: (Boolean) -> Unit = {},
 ) {
     Card(
@@ -61,6 +62,7 @@ fun ImageCard(
                     .fillMaxWidth()
                     .padding(end = 8.dp),
                 name = name,
+                subLabel = subLabel,
                 isFavorite = isFavorite,
                 onFavoriteChanged = onFavoriteChanged,
             )
@@ -72,29 +74,44 @@ fun ImageCard(
 @Composable
 private fun CardRow(
     name: String,
+    subLabel: String?,
     isFavorite: Boolean,
     onFavoriteChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
+    Column(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.Center,
     ) {
-        Text(
-            modifier = Modifier
-                .weight(1F, fill = true)
-                .padding(16.dp),
-            text = name,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-        FavoriteButton(
-            isFavorite = isFavorite,
-            onFavoriteChanged = onFavoriteChanged,
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                modifier = Modifier
+                    .weight(1F)
+                    .padding(16.dp),
+                text = name,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            FavoriteButton(
+                isFavorite = isFavorite,
+                onFavoriteChanged = onFavoriteChanged,
+            )
+        }
+        subLabel?.let {
+            Text(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .padding(bottom = 16.dp),
+                text = subLabel,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
     }
 }
 
@@ -108,6 +125,7 @@ private fun BreedCardPreview() {
             modifier = Modifier.width(256.dp),
             name = "Dragon Li",
             imageUrl = "imageUrl",
+            subLabel = "sub label",
             isFavorite = favorite,
             onFavoriteChanged = { favorite = it },
             onClick = {}

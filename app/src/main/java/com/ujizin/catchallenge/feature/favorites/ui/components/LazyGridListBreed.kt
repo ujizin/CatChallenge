@@ -7,7 +7,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ujizin.catchallenge.R
 import com.ujizin.catchallenge.core.ui.components.ImageCard
 import com.ujizin.catchallenge.core.ui.model.BreedUI
 
@@ -33,6 +35,7 @@ fun LazyGridListBreed(
             ImageCard(
                 modifier = Modifier.animateItem(),
                 name = breed.name,
+                subLabel = stringResource(R.string.life_span_label, breed.lifeSpan),
                 imageUrl = breed.imageUrl,
                 onClick = { onBreedItemClick(breed) },
                 isFavorite = breed.isFavorite,

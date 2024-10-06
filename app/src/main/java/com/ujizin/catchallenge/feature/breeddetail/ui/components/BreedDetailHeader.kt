@@ -39,7 +39,7 @@ fun BreedDetailHeader(
             Column(Modifier.weight(1F)) {
                 Text(text = title, style = MaterialTheme.typography.titleLarge)
                 Text(
-                    text = stringResource(R.string.origin, origin),
+                    text = stringResource(R.string.origin_label, origin),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -50,7 +50,7 @@ fun BreedDetailHeader(
         }
         Text(
             modifier = Modifier.padding(top = 4.dp),
-            text = stringResource(R.string.temperament, temperament),
+            text = stringResource(R.string.temperament_label, temperament),
             style = MaterialTheme.typography.bodySmall
         )
     }

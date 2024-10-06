@@ -6,6 +6,7 @@
 
     <string name="search_label">Search</string>
     <string name="description_label">Description</string>
-    <string name="temperament">Temperament: %s</string>
-    <string name="origin">Origin: %s</string>
+    <string name="temperament_label">Temperament: %s</string>
+    <string name="origin_label">Origin: %s</string>
+    <string name="life_span_label">Lifespan: %s years</string>
 </resources>

@@ -7,6 +7,4 @@ import kotlinx.serialization.Serializable
 data class FavoritePayload(
     @SerialName("image_id")
     val imageId: String,
-    @SerialName("sub_id")
-    val subId: String,
 )

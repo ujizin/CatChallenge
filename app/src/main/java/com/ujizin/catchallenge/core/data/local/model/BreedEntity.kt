@@ -14,4 +14,6 @@ data class BreedEntity(
     val description: String,
     @ColumnInfo("image_url")
     val imageUrl: String?,
+    @ColumnInfo("favorite_id")
+    val favoriteId: Long?,
 )

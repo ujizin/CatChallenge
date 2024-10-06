@@ -14,5 +14,5 @@ data class BreedResponse(
     @SerialName("reference_image_id")
     val imageId: ImageId? = null,
     @Transient
-    val imageUrl: String? = null
+    val favoriteId: Long? = null,
 )

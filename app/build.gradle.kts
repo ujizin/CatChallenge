@@ -29,6 +29,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField("String", "CDN_URL", "\"https://cdn2.thecatapi.com/images\"")
         buildConfigField("String", "BASE_URL", "\"https://api.thecatapi.com\"")
         buildConfigField("String", "API_KEY", "${localProperties["API_KEY"]}")
     }

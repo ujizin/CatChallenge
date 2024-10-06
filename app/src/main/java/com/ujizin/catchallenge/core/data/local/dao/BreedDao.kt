@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import androidx.room.Upsert
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 
@@ -12,6 +13,12 @@ interface BreedDao {
 
     @Query("SELECT * FROM breeds")
     fun getBreedsPagingSource(): PagingSource<Int, BreedEntity>
+
+    @Query("SELECT * from breeds where id = :id")
+    suspend fun findBreed(id: String): BreedEntity?
+
+    @Update
+    suspend fun updateBreed(breed: BreedEntity): Int
 
     @Upsert
     suspend fun upsertAll(breeds: List<BreedEntity>)

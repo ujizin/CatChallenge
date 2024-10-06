@@ -4,6 +4,7 @@ import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
+import com.ujizin.catchallenge.core.data.remote.datasource.FavoriteDataSource
 import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
 import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToDomain
 import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToEntity
@@ -36,6 +37,9 @@ class BreedRepositoryTest {
     @MockK
     private lateinit var mockBreedDataSource: BreedDataSource
 
+    @MockK
+    private lateinit var mockFavoriteSource: FavoriteDataSource
+
     private lateinit var sutRepository: BreedRepository
 
     @Before
@@ -44,6 +48,7 @@ class BreedRepositoryTest {
 
         sutRepository = BreedRepository(
             breedDataSource = mockBreedDataSource,
+            favoriteDataSource = mockFavoriteSource,
             breedDao = mockBreedDao,
             dispatcher = mainCoroutineRule.dispatcher
         )
@@ -59,7 +64,6 @@ class BreedRepositoryTest {
                 description = "description-$index",
                 origin = "origin-$index",
                 temperament = "temperament-$index",
-                imageUrl = "imageUrl-$index",
             )
         }
         val pagingSourceFactory = expected.fromResponseToEntity().asPagingSourceFactory()

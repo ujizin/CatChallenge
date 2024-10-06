@@ -5,15 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FavoriteResponse(
-    val id: Int,
+    val id: Long,
     @SerialName("image_id")
-    val imageId: String,
-    val image: ImageResponse,
-) {
-
-    @Serializable
-    data class ImageResponse(
-        val id: String,
-        val url: String
-    )
-}
+    val imageId: String? = null,
+)

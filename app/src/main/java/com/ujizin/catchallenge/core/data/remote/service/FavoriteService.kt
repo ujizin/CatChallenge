@@ -16,10 +16,10 @@ interface FavoriteService {
     @POST("v1/favourites")
     suspend fun sendFavorite(
         @Body payload: FavoritePayload
-    )
+    ): FavoriteResponse
 
     @DELETE("v1/favourites/{id}")
     suspend fun deleteFavorite(
-        @Path("id") id: Int
+        @Path("id") id: Long
     )
 }

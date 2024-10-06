@@ -1,7 +1,6 @@
 package com.ujizin.catchallenge.core.data.remote.service.di
 
 import com.ujizin.catchallenge.core.data.remote.service.BreedService
-import com.ujizin.catchallenge.core.data.remote.service.CatImageService
 import com.ujizin.catchallenge.core.data.remote.service.FavoriteService
 import dagger.Module
 import dagger.Provides
@@ -21,9 +20,5 @@ internal object ServiceModule {
     @Provides
     @Singleton
     fun provideFavoriteService(retrofit: Retrofit) = retrofit.create(FavoriteService::class.java)
-
-    @Provides
-    @Singleton
-    fun provideCatImageService(retrofit: Retrofit) = retrofit.create(CatImageService::class.java)
 
 }

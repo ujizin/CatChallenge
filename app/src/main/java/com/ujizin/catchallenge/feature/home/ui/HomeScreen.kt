@@ -23,10 +23,10 @@ import com.ujizin.catchallenge.R
 import com.ujizin.catchallenge.core.ui.components.CenterLoading
 import com.ujizin.catchallenge.core.ui.components.TextField
 import com.ujizin.catchallenge.core.ui.components.TopAppBarContent
+import com.ujizin.catchallenge.core.ui.model.BreedUI
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 import com.ujizin.catchallenge.feature.home.HomeViewModel
 import com.ujizin.catchallenge.feature.home.ui.components.CatPagerList
-import com.ujizin.catchallenge.core.ui.model.BreedUI
 import kotlinx.coroutines.flow.Flow
 
 @Composable

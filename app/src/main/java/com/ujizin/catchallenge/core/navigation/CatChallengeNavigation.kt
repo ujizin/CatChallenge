@@ -50,7 +50,11 @@ fun CatChallengeNavigation(modifier: Modifier = Modifier) {
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None }
             ) {
-                FavoriteScreen()
+                FavoriteScreen(
+                    onNavigateToBreedDetail = { breed ->
+                        navController.navigate(Destination.BreedDetail(breed))
+                    }
+                )
             }
             composable<Destination.BreedDetail>(
                 enterTransition = { EnterTransition.None },

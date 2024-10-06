@@ -25,7 +25,7 @@ import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBarContent(
+fun EnterAlwaysTopBar(
     header: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
@@ -63,7 +63,7 @@ private fun TopAppBarContentPreview() {
         val list = remember {
             List(100) { "Text-$it" }
         }
-        TopAppBarContent(
+        EnterAlwaysTopBar(
             modifier = Modifier.fillMaxSize(),
             header = { Text("Title content") },
             content = {

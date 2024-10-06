@@ -107,23 +107,13 @@ private fun CardRow(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
-        IconButton(
-            onClick = { onFavoriteChanged(!isFavorite) }
-        ) {
-            val color by animateColorAsState(
-                targetValue = if (isFavorite) Color.Red else LocalContentColor.current
-            )
-            Icon(
-                imageVector = when {
-                    isFavorite -> Icons.Filled.Favorite
-                    else -> Icons.Outlined.FavoriteBorder
-                },
-                tint = color,
-                contentDescription = null
-            )
-        }
+        FavoriteButton(
+            isFavorite = isFavorite,
+            onFavoriteChanged = onFavoriteChanged,
+        )
     }
 }
+
 
 @Preview
 @Composable

@@ -22,8 +22,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ujizin.catchallenge.R
 import com.ujizin.catchallenge.core.ui.components.CenterLoading
-import com.ujizin.catchallenge.core.ui.components.TextField
 import com.ujizin.catchallenge.core.ui.components.EnterAlwaysTopBar
+import com.ujizin.catchallenge.core.ui.components.TextField
 import com.ujizin.catchallenge.core.ui.model.BreedUI
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 import com.ujizin.catchallenge.feature.home.HomeViewModel

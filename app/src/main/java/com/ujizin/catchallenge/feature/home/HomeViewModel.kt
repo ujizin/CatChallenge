@@ -6,7 +6,7 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.map
 import com.ujizin.catchallenge.core.data.repository.BreedRepository
-import com.ujizin.catchallenge.core.ui.model.BreedUI
+import com.ujizin.catchallenge.core.data.repository.model.Breed
 import com.ujizin.catchallenge.core.ui.utils.WhileActivate
 import com.ujizin.catchallenge.feature.home.ui.HomeUIEvent
 import com.ujizin.catchallenge.feature.home.ui.HomeUIState
@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
 @OptIn(FlowPreview::class)
@@ -31,19 +30,13 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _searchTextState = MutableStateFlow("")
-    private val _itemsFavorites = MutableStateFlow(setOf<BreedUI>())
 
     private val paging = repository.pager
+        .map { it.map(Breed::toBreedUI) }
         .cachedIn(viewModelScope)
         .combine(_searchTextState.debounce(DEBOUNCE_TIME)) { pagingData, searchText ->
             pagingData.filter {
                 searchText.isBlank() || it.name.startsWith(searchText, ignoreCase = true)
-            }
-        }
-        .combine(_itemsFavorites) { pagingData, itemsFavorite ->
-            pagingData.map { pagingBreed ->
-                val breedUI = pagingBreed.toBreedUI()
-                itemsFavorite.find { it.id == breedUI.id } ?: breedUI
             }
         }
 
@@ -67,16 +60,10 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onBreedFavorite(event: HomeUIEvent.OnBreedFavorite) {
-        val updatedBreed = event.breed.copy(isFavorite = event.isFavorite)
-
         repository.updateFavorite(
-            id = updatedBreed.id,
-            isFavorite = updatedBreed.isFavorite
+            id = event.breed.id,
+            isFavorite = event.isFavorite,
         ).launchIn(viewModelScope)
-
-        _itemsFavorites.update { list ->
-            (list - event.breed) + updatedBreed
-        }
     }
 
     companion object {

@@ -49,16 +49,20 @@ class BreedRepository @Inject constructor(
         pagingData.map(BreedEntity::toDomain)
     }.flowOn(dispatcher)
 
+    val favorites = breedDao.getFavoritesBreed()
+        .map { it.map(BreedEntity::toDomain) }
+        .flowOn(dispatcher)
+
     fun updateFavorite(
         id: String,
         isFavorite: Boolean
     ): Flow<Boolean> = flow { emit(breedDao.findBreed(id)) }
-        .onStart { mutex.lock() }
+        .onStart { if (!mutex.isLocked) mutex.lock() }
         .mapNotNull { checkNotNull(it) { "Favorite breed must not be null to delete" } }
         .flatMapConcat { breed -> updateFavoriteInternal(breed, isFavorite) }
         .map { breed -> breedDao.updateBreed(breed) != -1 }
         .catch { emit(false) }
-        .onCompletion { mutex.unlock() }
+        .onCompletion { if (mutex.isLocked) mutex.unlock() }
         .flowOn(dispatcher)
 
     private fun updateFavoriteInternal(

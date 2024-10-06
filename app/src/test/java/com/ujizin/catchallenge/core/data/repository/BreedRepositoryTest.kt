@@ -64,6 +64,7 @@ class BreedRepositoryTest {
                 description = "description-$index",
                 origin = "origin-$index",
                 temperament = "temperament-$index",
+                lifeSpan = "12 - 15"
             )
         }
         val pagingSourceFactory = expected.fromResponseToEntity().asPagingSourceFactory()

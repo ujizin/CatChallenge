@@ -13,4 +13,5 @@ data class BreedUI(
     val description: String,
     val imageUrl: String?,
     val isFavorite: Boolean,
+    val lifeSpan: String
 )

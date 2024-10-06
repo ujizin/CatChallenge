@@ -13,6 +13,7 @@ class BreedParameterProvider : PreviewParameterProvider<BreedUI> {
         description = "description",
         imageUrl = null,
         isFavorite = false,
+        lifeSpan = "10 - 15"
     )
 
     override val values: Sequence<BreedUI>

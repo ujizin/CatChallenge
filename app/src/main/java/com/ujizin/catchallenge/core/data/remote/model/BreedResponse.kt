@@ -13,6 +13,8 @@ data class BreedResponse(
     val description: String,
     @SerialName("reference_image_id")
     val imageId: ImageId? = null,
+    @SerialName("life_span")
+    val lifeSpan: String,
     @Transient
     val favoriteId: Long? = null,
 )

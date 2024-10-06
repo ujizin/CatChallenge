@@ -22,11 +22,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.ujizin.catchallenge.R
 import com.ujizin.catchallenge.core.ui.components.FixedAppBar
 import com.ujizin.catchallenge.core.ui.model.BreedUI
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
-import com.ujizin.catchallenge.core.ui.utils.dataImageSuffixFormat
 import com.ujizin.catchallenge.feature.breeddetail.BreedDetailViewModel
 import com.ujizin.catchallenge.feature.breeddetail.ui.components.BreedDetailContainer
 
@@ -72,8 +70,7 @@ fun BreedDetailContent(
                 .fillMaxWidth()
                 .aspectRatio(1F),
             model = ImageRequest.Builder(LocalContext.current)
-                .dataImageSuffixFormat(breedUI.imageUrl)
-                .error(R.drawable.ic_cat)
+                .data(breedUI.imageUrl)
                 .build(),
             contentDescription = breedUI.name,
             contentScale = ContentScale.Crop

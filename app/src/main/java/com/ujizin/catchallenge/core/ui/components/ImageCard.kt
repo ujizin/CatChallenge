@@ -1,6 +1,5 @@
 package com.ujizin.catchallenge.core.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,9 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.ujizin.catchallenge.R
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
-import com.ujizin.catchallenge.core.ui.utils.dataImageSuffixFormat
 
 @Composable
 fun ImageCard(
@@ -41,7 +38,6 @@ fun ImageCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     onFavoriteChanged: (Boolean) -> Unit = {},
-    @DrawableRes fallbackImageRes: Int = R.drawable.ic_cat,
 ) {
     Card(
         modifier = modifier,
@@ -55,10 +51,7 @@ fun ImageCard(
                     .fillMaxWidth()
                     .aspectRatio(1F),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .dataImageSuffixFormat(imageUrl)
-                    .fallback(fallbackImageRes)
-                    .error(fallbackImageRes)
-                    .crossfade(true)
+                    .data(imageUrl)
                     .build(),
                 contentScale = ContentScale.Crop,
                 contentDescription = name

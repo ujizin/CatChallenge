@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.ujizin.catchallenge.core.data.repository.model.Breed
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.ujizin.catchallenge.core.ui.components.CenterLoading
 import com.ujizin.catchallenge.core.ui.components.ImageCard
 import com.ujizin.catchallenge.core.ui.model.BreedUI
@@ -31,9 +32,14 @@ internal fun CatPagerList(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        items(count = pagingItems.itemCount) { index ->
+        items(
+            count = pagingItems.itemCount,
+            key = pagingItems.itemKey { it.id },
+            contentType = pagingItems.itemContentType { "CatPagerList" }
+        ) { index ->
             val item = pagingItems[index] ?: return@items
             ImageCard(
+                modifier = Modifier.animateItem(),
                 name = item.name,
                 imageUrl = item.imageUrl,
                 isFavorite = item.isFavorite,

@@ -5,4 +5,7 @@
     <string name="favorite_label">Favorite</string>
 
     <string name="search_label">Search</string>
+    <string name="description_label">Description</string>
+    <string name="temperament">Temperament: %s</string>
+    <string name="origin">Origin: %s</string>
 </resources>

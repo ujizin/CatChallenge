@@ -2,10 +2,10 @@ package com.ujizin.catchallenge.core.data.repository
 
 import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
-import com.ujizin.catchallenge.core.data.BreedModelUtils.createBreedEntityList
-import com.ujizin.catchallenge.core.data.BreedModelUtils.createBreedList
-import com.ujizin.catchallenge.core.data.BreedModelUtils.createBreedResponseList
-import com.ujizin.catchallenge.core.data.BreedModelUtils.toEntity
+import com.ujizin.catchallenge.core.data.BreedDataModelUtils.createBreedEntityList
+import com.ujizin.catchallenge.core.data.BreedDataModelUtils.createBreedList
+import com.ujizin.catchallenge.core.data.BreedDataModelUtils.createBreedResponseList
+import com.ujizin.catchallenge.core.data.BreedDataModelUtils.toEntity
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource

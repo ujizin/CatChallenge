@@ -4,7 +4,7 @@ import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
 import com.ujizin.catchallenge.core.data.repository.model.Breed
 
-object BreedModelUtils {
+object BreedDataModelUtils {
 
     private const val DEFAULT_VALUE = 10
 

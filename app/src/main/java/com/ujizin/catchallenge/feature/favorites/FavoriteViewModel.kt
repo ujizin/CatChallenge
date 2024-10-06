@@ -21,7 +21,7 @@ class FavoriteViewModel @Inject constructor(
     val repository: BreedRepository,
 ) : ViewModel() {
 
-    val uiState = repository.favorites.map {
+    val uiState = repository.getFavorites().map {
         FavoriteUIState(isLoading = false, it.map(Breed::toBreedUI))
     }.stateIn(
         viewModelScope,

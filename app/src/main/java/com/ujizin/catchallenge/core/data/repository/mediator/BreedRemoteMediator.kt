@@ -7,7 +7,7 @@ import androidx.paging.RemoteMediator
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
-import com.ujizin.catchallenge.core.data.repository.mapper.toEntity
+import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToEntity
 import kotlinx.coroutines.flow.first
 import retrofit2.HttpException
 import java.io.IOException
@@ -43,7 +43,7 @@ class BreedRemoteMediator(
                 page = currentPage++
             ).first()
 
-            breedDao.withTransaction { upsertAll(breedResponse.toEntity()) }
+            breedDao.withTransaction { upsertAll(breedResponse.fromResponseToEntity()) }
 
             MediatorResult.Success(endOfPaginationReached = breedResponse.isEmpty())
         } catch (e: IOException) {

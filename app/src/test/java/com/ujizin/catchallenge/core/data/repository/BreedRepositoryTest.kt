@@ -1,27 +1,30 @@
 package com.ujizin.catchallenge.core.data.repository
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.RemoteMediator
-import androidx.paging.RemoteMediator.InitializeAction
 import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
-import com.ujizin.catchallenge.core.data.local.model.BreedEntity
-import com.ujizin.catchallenge.core.data.repository.mapper.toDomain
-import com.ujizin.catchallenge.core.data.repository.mediator.BreedRemoteMediator
+import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
+import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
+import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToDomain
+import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToEntity
 import com.ujizin.catchallenge.core.data.repository.model.Breed
 import com.ujizin.catchallenge.core.test.MainCoroutineRule
 import io.mockk.MockKAnnotations
+import io.mockk.Runs
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.just
+import io.mockk.slot
+import io.mockk.verify
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalPagingApi::class)
 class BreedRepositoryTest {
 
     @get:Rule
@@ -31,7 +34,7 @@ class BreedRepositoryTest {
     private lateinit var mockBreedDao: BreedDao
 
     @MockK
-    private lateinit var mockRemoteMediator: BreedRemoteMediator
+    private lateinit var mockBreedDataSource: BreedDataSource
 
     private lateinit var sutRepository: BreedRepository
 
@@ -39,12 +42,8 @@ class BreedRepositoryTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
-        coEvery {
-            mockRemoteMediator.initialize()
-        } returns InitializeAction.SKIP_INITIAL_REFRESH
-
         sutRepository = BreedRepository(
-            remoteMediator = mockRemoteMediator,
+            breedDataSource = mockBreedDataSource,
             breedDao = mockBreedDao,
             dispatcher = mainCoroutineRule.dispatcher
         )
@@ -54,7 +53,7 @@ class BreedRepositoryTest {
     fun `given paging, when getting breeds, then should return breed page`() = runTest {
         // Given
         val expected = List(10) { index ->
-            BreedEntity(
+            BreedResponse(
                 id = "id-$index",
                 name = "name-$index",
                 description = "description-$index",
@@ -63,17 +62,24 @@ class BreedRepositoryTest {
                 imageUrl = "imageUrl-$index",
             )
         }
-        val pagingSourceFactory = expected.asPagingSourceFactory()
+        val pagingSourceFactory = expected.fromResponseToEntity().asPagingSourceFactory()
+        val slot = slot<suspend BreedDao.() -> Unit>()
+        coEvery { mockBreedDao.withTransaction(capture(slot)) } coAnswers {
+            slot.captured(mockBreedDao)
+        }
+        coEvery { mockBreedDao.upsertAll(expected.fromResponseToEntity()) } just Runs
         every { mockBreedDao.getBreedsPagingSource() } returns pagingSourceFactory()
 
-        val mediatorResult = RemoteMediator.MediatorResult.Success(endOfPaginationReached = true)
-        coEvery { mockRemoteMediator.load(any(), any()) } returns mediatorResult
+        coEvery { mockBreedDataSource.getBreeds(any(), any()) } returns flowOf(expected)
 
         // When
         val actual = mutableListOf<Breed>()
-        sutRepository.getPaging().asSnapshot().toCollection(actual)
+        sutRepository.pager.asSnapshot().toCollection(actual)
 
         // Then
-        assertEquals(expected.toDomain(), actual)
+        coVerify(exactly = 1) { mockBreedDao.withTransaction(slot.captured) }
+        verify(exactly = 1) { mockBreedDataSource.getBreeds(any(), any()) }
+        coVerify(exactly = 1) { mockBreedDao.upsertAll(expected.fromResponseToEntity()) }
+        assertEquals(expected.fromResponseToDomain(), actual)
     }
 }

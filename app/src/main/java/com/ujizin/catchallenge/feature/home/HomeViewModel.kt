@@ -6,7 +6,7 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.map
 import com.ujizin.catchallenge.core.data.repository.BreedRepository
-import com.ujizin.catchallenge.core.data.repository.model.Breed
+import com.ujizin.catchallenge.core.ui.model.BreedUI
 import com.ujizin.catchallenge.core.ui.utils.WhileActivate
 import com.ujizin.catchallenge.feature.home.ui.HomeUIEvent
 import com.ujizin.catchallenge.feature.home.ui.HomeUIState
@@ -17,19 +17,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 
 @HiltViewModel
+@OptIn(FlowPreview::class)
 class HomeViewModel @Inject constructor(
-    repository: BreedRepository
+    private val repository: BreedRepository
 ) : ViewModel() {
 
     private val _searchTextState = MutableStateFlow("")
+    private val _itemsFavorites = MutableStateFlow(setOf<BreedUI>())
 
-    @OptIn(FlowPreview::class)
     private val paging = repository.pager
         .cachedIn(viewModelScope)
         .combine(_searchTextState.debounce(DEBOUNCE_TIME)) { pagingData, searchText ->
@@ -37,8 +40,11 @@ class HomeViewModel @Inject constructor(
                 searchText.isBlank() || it.name.startsWith(searchText, ignoreCase = true)
             }
         }
-        .map { pagingData ->
-            pagingData.map(Breed::toBreedUI)
+        .combine(_itemsFavorites) { pagingData, itemsFavorite ->
+            pagingData.map { pagingBreed ->
+                val breedUI = pagingBreed.toBreedUI()
+                itemsFavorite.find { it.id == breedUI.id } ?: breedUI
+            }
         }
 
     val uiState = _searchTextState.map { searchText ->
@@ -55,7 +61,22 @@ class HomeViewModel @Inject constructor(
 
     fun onEvent(event: HomeUIEvent): Unit = when (event) {
         is HomeUIEvent.OnSearch -> _searchTextState.update { event.text }
-        else -> Unit
+        is HomeUIEvent.OnBreedFavorite -> onBreedFavorite(event)
+
+        is HomeUIEvent.OnBreedClick -> Unit
+    }
+
+    private fun onBreedFavorite(event: HomeUIEvent.OnBreedFavorite) {
+        val updatedBreed = event.breed.copy(isFavorite = event.isFavorite)
+
+        repository.updateFavorite(
+            id = updatedBreed.id,
+            isFavorite = updatedBreed.isFavorite
+        ).launchIn(viewModelScope)
+
+        _itemsFavorites.update { list ->
+            (list - event.breed) + updatedBreed
+        }
     }
 
     companion object {

@@ -9,5 +9,6 @@ fun Breed.toBreedUI() = BreedUI(
     origin = origin,
     temperament = temperament,
     description = description,
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
+    isFavorite = isFavorite
 )

@@ -12,4 +12,5 @@ data class BreedUI(
     val temperament: String,
     val description: String,
     val imageUrl: String?,
+    val isFavorite: Boolean,
 )

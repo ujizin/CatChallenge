@@ -1,5 +1,6 @@
 package com.ujizin.catchallenge.feature.home.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -59,6 +60,10 @@ fun HomeContent(
 ) {
     val pagingItems = pagingData.collectAsLazyPagingItems()
 
+    BackHandler(enabled = searchText.isNotEmpty()) {
+        onEvent(HomeUIEvent.OnSearch(""))
+    }
+
     TopAppBarContent(
         header = {
             Text(
@@ -81,7 +86,10 @@ fun HomeContent(
                 else -> CatPagerList(
                     modifier = modifier,
                     pagingItems = pagingItems,
-                    onBreedClick = { onEvent(HomeUIEvent.OnBreedClick(it)) }
+                    onBreedClick = { onEvent(HomeUIEvent.OnBreedClick(it)) },
+                    onFavoriteBreedChanged = { breed, isFavorite ->
+                        onEvent(HomeUIEvent.OnBreedFavorite(breed, isFavorite))
+                    }
                 )
             }
         }

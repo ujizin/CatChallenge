@@ -29,7 +29,7 @@ import javax.inject.Singleton
 @Singleton
 @OptIn(ExperimentalCoroutinesApi::class)
 class BreedRepository @Inject constructor(
-    private val breedDataSource: BreedDataSource,
+    breedDataSource: BreedDataSource,
     private val favoriteDataSource: FavoriteDataSource,
     private val breedDao: BreedDao,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
@@ -65,7 +65,7 @@ class BreedRepository @Inject constructor(
         breed: BreedEntity,
         isFavorite: Boolean
     ): Flow<BreedEntity> = when {
-        isFavorite -> favoriteDataSource.sendFavorite(breed.id).map { it.id }
+        isFavorite -> favoriteDataSource.sendFavorite(breed.id, breed.favoriteId).map { it.id }
         else -> favoriteDataSource.deleteFavorite(breed.favoriteId).map { result ->
             breed.favoriteId.takeUnless { result }
         }

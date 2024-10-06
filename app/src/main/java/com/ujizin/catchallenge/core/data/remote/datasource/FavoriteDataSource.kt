@@ -1,6 +1,5 @@
 package com.ujizin.catchallenge.core.data.remote.datasource
 
-import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.model.FavoritePayload
 import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.remote.service.FavoriteService
@@ -20,8 +19,11 @@ class FavoriteDataSource @Inject constructor(
     private val favoriteService: FavoriteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) {
-    fun sendFavorite(breedId: String): Flow<FavoriteResponse> = flow {
-        emit(favoriteService.sendFavorite(FavoritePayload(breedId)))
+    fun sendFavorite(breedId: String, favoriteId: Long?): Flow<FavoriteResponse> = flow {
+        when {
+            favoriteId != null -> emit(FavoriteResponse(favoriteId))
+            else -> emit(favoriteService.sendFavorite(FavoritePayload(breedId)))
+        }
     }.flowOn(dispatcher)
 
     fun deleteFavorite(favoriteId: Long?) = flow {

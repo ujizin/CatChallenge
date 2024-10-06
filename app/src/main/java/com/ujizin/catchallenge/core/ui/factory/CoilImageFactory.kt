@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Singleton
 class CoilImageFactory @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val imageInterceptor: ImageInterceptor
+    imageInterceptor: ImageInterceptor
 ) : ImageLoaderFactory {
 
     private val okHttpClient = OkHttpClient.Builder()

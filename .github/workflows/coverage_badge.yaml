@@ -21,7 +21,7 @@ jobs:
         run: |
           {
             echo 'COVERAGE<<EOF'
-            ./gradlew -q printLineCoverage
+            ./gradlew -q --warning-mode=none printLineCoverage
             echo EOF
           } >> $GITHUB_ENV
 

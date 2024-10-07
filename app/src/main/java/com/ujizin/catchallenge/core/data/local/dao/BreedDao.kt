@@ -24,6 +24,9 @@ interface BreedDao {
     @Update
     suspend fun updateBreed(breed: BreedEntity): Int
 
+    @Query("UPDATE breeds set favorite_id = null")
+    suspend fun removeAllUpdate()
+
     @Upsert
     suspend fun upsertAll(breeds: List<BreedEntity>)
 

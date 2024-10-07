@@ -45,10 +45,10 @@ class BreedDataSourceTest {
         // Given
         val breedList = createBreedResponseList(TEST_LIMIT_PAGE)
         val favorites = breedList.take(Random.nextInt(TEST_LIMIT_PAGE)).mapIndexed { index, breed ->
-            FavoriteResponse(index.toLong(), imageId = breed.id)
+            FavoriteResponse(index.toLong(), breedId = breed.id)
         }
         val expected = breedList.map { breed ->
-            breed.copy(favoriteId = favorites.find { it.imageId == breed.id }?.id)
+            breed.copy(favoriteId = favorites.find { it.breedId == breed.id }?.id)
         }
 
         coEvery { mockBreedService.getBreeds(TEST_LIMIT_PAGE, TEST_PAGE) } returns breedList

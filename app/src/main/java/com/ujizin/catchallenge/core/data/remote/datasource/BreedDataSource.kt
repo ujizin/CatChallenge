@@ -30,7 +30,7 @@ class BreedDataSource @Inject constructor(
     private fun Flow<List<BreedResponse>>.mapFavorites() = map { breeds ->
         val favorites = favoriteService.getFavorites()
         breeds.map breedsMap@{ breed ->
-            breed.copy(favoriteId = favorites.find { it.imageId == breed.id }?.id)
+            breed.copy(favoriteId = favorites.find { it.breedId == breed.id }?.id)
         }
     }
 }

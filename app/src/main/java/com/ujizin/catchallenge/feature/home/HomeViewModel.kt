@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-    val uiState = _searchTextState.map { searchText ->
+    val uiState = combine(repository.syncFavorites(), _searchTextState) { _, searchText ->
         HomeUIState(
             isLoading = false,
             paging = paging,

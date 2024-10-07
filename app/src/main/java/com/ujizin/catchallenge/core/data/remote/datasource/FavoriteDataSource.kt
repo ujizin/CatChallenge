@@ -19,6 +19,11 @@ class FavoriteDataSource @Inject constructor(
     private val favoriteService: FavoriteService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) {
+
+    fun getFavorites() = flow {
+        emit(favoriteService.getFavorites())
+    }.flowOn(dispatcher)
+
     fun sendFavorite(breedId: String, favoriteId: Long?): Flow<FavoriteResponse> = flow {
         when {
             favoriteId != null -> emit(FavoriteResponse(favoriteId))

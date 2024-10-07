@@ -8,4 +8,6 @@ data class FavoriteResponse(
     val id: Long,
     @SerialName("image_id")
     val breedId: String? = null,
+    @SerialName("sub_id")
+    val userId: String? = null,
 )

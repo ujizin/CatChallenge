@@ -12,12 +12,19 @@
 
 - Jetpack Compose
 - Jetpack Navigation Component
+- Material You
 - Coroutines
 - Hilt
 - Retrofit
 - Room
 - Mockk
-- Kover 
+- Robolectric
+- Kover
+
+## How to build
+
+1. Set the `API_KEY` in your `local.properties` file.
+1. To obtain your `API_KEY`, please visit [The Cat API](https://thecatapi.com/).
 
 ## Journey
 

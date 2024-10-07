@@ -24,7 +24,9 @@ jobs:
           sudo udevadm trigger --name-match=kvm
 
       - name: Generate coverage output
-        run: echo "COVERAGE=$(${{github.workspace}}/gradlew -q printLineCoverage)" >> $GITHUB_ENV
+        run: |
+          COVERAGE=$(${GITHUB_WORKSPACE}/gradlew -q printLineCoverage)
+          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
       - name: Update dynamic badge gist
         uses: schneegans/dynamic-badges-action@v1.7.0

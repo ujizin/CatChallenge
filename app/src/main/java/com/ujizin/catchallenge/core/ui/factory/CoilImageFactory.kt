@@ -37,13 +37,6 @@ class CoilImageFactory @Inject constructor(
                     .weakReferencesEnabled(true)
                     .build()
             }
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .diskCache {
-                DiskCache.Builder()
-                    .directory(File(context.cacheDir, BREED_CACHE_FILE_NAME).apply { mkdirs() })
-                    .maxSizePercent(0.001)
-                    .build()
-            }
             .build()
     }
 

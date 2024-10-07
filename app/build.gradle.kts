@@ -128,6 +128,9 @@ kover {
             "**.core.navigation.**",
             "**.ui.**",
         )
-        annotatedBy("androidx.compose.ui.tooling.preview.Preview")
+        annotatedBy(
+            "androidx.compose.ui.tooling.preview.Preview",
+            "kotlinx.serialization.Serializable",
+        )
     }
 }

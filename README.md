@@ -12,6 +12,8 @@
 
 ## 📚 Stack
 
+<img src="previews/cat_challenge.gif" width="250px"  align="right">
+
 - Jetpack Compose
 - Jetpack Navigation Component
 - Material You

@@ -5,6 +5,6 @@ import com.ujizin.catchallenge.core.ui.model.BreedUI
 
 @Immutable
 data class FavoriteUIState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val favoriteList: List<BreedUI> = emptyList(),
 )

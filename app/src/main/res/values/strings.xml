@@ -4,6 +4,8 @@
     <string name="home_label">Home</string>
     <string name="favorite_label">Favorite</string>
 
+    <string name="favorite_empty_description">No favorites yet. Tap the heart to add your favorite breeds!</string>
+
     <string name="search_label">Search</string>
     <string name="description_label">Description</string>
     <string name="temperament_label">Temperament: %s</string>

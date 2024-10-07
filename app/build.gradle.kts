@@ -143,3 +143,5 @@ kover {
         )
     }
 }
+
+apply(from = "$rootDir/coverage.gradle.kts")

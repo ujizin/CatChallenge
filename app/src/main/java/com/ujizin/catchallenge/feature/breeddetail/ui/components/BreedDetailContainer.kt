@@ -38,7 +38,7 @@ fun BreedDetailContainer(
             isFavorite = isFavorite,
             onFavoriteChanged = onFavoriteChanged
         )
-        HorizontalDivider(Modifier.padding(vertical = 4.dp))
+        HorizontalDivider(Modifier.padding(vertical = 8.dp))
         BreedDetailTopic(
             title = stringResource(R.string.description_label),
             description = description,

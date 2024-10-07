@@ -56,7 +56,13 @@ android {
         compose = true
     }
     testOptions {
-        unitTests.isReturnDefaultValues = true
+        unitTests.all {
+            it.jvmArgs("-noverify")
+        }
+        unitTests {
+            isReturnDefaultValues = true
+            isIncludeAndroidResources = true
+        }
     }
 }
 
@@ -70,6 +76,7 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.material3)
     implementation(libs.coil)
+    implementation(libs.androidx.core.test.ktx)
     debugImplementation(libs.bundles.androidx.compose.debug)
 
     // Core
@@ -90,6 +97,7 @@ dependencies {
     // Unit Test
     testImplementation(libs.bundles.unit.test)
     testImplementation(libs.androidx.paging.testing.android)
+    testImplementation(libs.robolectric)
 
     // UI Test
     androidTestImplementation(platform(libs.androidx.compose.bom))

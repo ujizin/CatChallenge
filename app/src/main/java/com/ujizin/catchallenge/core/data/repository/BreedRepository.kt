@@ -60,9 +60,9 @@ class BreedRepository @Inject constructor(
     }.flowOn(dispatcher)
 
     fun syncFavorites() = favoriteDataSource.getFavorites()
-        .onEach { breedDao.removeAllUpdate() }
+        .onEach { breedDao.removeAllFavorite() }
         .map { remoteFavorites ->
-            breedDao.upsertAll(remoteFavorites.mapBreedToFavorite())
+            remoteFavorites.updateFavorites()
             true
         }.catch { emit(false) }
 
@@ -88,10 +88,8 @@ class BreedRepository @Inject constructor(
         }
     }.map { favoriteId -> breed.copy(favoriteId = favoriteId) }
 
-    private suspend fun List<FavoriteResponse>.mapBreedToFavorite() =
-        mapNotNull { favoriteResponse ->
-            favoriteResponse.breedId?.let { id ->
-                breedDao.findBreed(id)?.copy(favoriteId = favoriteResponse.id)
-            }
-        }
+    private suspend fun List<FavoriteResponse>.updateFavorites() = forEach {
+        if (it.breedId == null) return@forEach
+        breedDao.updateFavorite(it.breedId, it.id)
+    }
 }

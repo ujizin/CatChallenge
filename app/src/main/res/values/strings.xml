@@ -5,10 +5,13 @@
     <string name="favorite_label">Favorite</string>
 
     <string name="favorite_empty_description">No favorites yet. Tap the heart to add your favorite breeds!</string>
+    <string name="life_span_label">Lifespan: %s years</string>
+
+    <string name="error_description">Oh no, something went wrong</string>
+    <string name="button_retry_label">Retry</string>
 
     <string name="search_label">Search</string>
     <string name="description_label">Description</string>
     <string name="temperament_label">Temperament: %s</string>
     <string name="origin_label">Origin: %s</string>
-    <string name="life_span_label">Lifespan: %s years</string>
 </resources>

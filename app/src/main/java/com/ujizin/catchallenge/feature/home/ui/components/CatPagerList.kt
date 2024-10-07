@@ -2,6 +2,7 @@ package com.ujizin.catchallenge.feature.home.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -21,6 +22,7 @@ import com.ujizin.catchallenge.core.ui.model.BreedUI
 internal fun CatPagerList(
     modifier: Modifier,
     pagingItems: LazyPagingItems<BreedUI>,
+    onErrorRetryClick: () -> Unit,
     onBreedClick: (BreedUI) -> Unit,
     onFavoriteBreedChanged: (BreedUI, Boolean) -> Unit,
 ) {
@@ -50,7 +52,12 @@ internal fun CatPagerList(
 
         when (pagingItems.loadState.append) {
             is LoadState.Error -> item(span = { GridItemSpan(2) }) {
-                // TODO to be implemented
+                HomeErrorContainer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    onRetryClick = onErrorRetryClick,
+                )
             }
 
             LoadState.Loading -> item(span = { GridItemSpan(2) }) {

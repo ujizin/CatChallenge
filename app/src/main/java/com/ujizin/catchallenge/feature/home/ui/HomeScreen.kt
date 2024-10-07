@@ -29,6 +29,7 @@ import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 import com.ujizin.catchallenge.feature.home.HomeViewModel
 import com.ujizin.catchallenge.feature.home.ui.components.CatPagerList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.retry
 
 @Composable
 fun HomeScreen(
@@ -86,6 +87,7 @@ fun HomeContent(
                 else -> CatPagerList(
                     modifier = modifier,
                     pagingItems = pagingItems,
+                    onErrorRetryClick = pagingItems::retry,
                     onBreedClick = { onEvent(HomeUIEvent.OnBreedClick(it)) },
                     onFavoriteBreedChanged = { breed, isFavorite ->
                         onEvent(HomeUIEvent.OnBreedFavorite(breed, isFavorite))

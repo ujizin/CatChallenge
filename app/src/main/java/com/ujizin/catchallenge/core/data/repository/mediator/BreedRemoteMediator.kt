@@ -40,10 +40,12 @@ class BreedRemoteMediator(
             currentPage = state.page
             val breedResponse = breedDataSource.getBreeds(
                 limit = state.config.pageSize,
-                page = currentPage++
+                page = currentPage
             ).first()
 
             breedDao.withTransaction { upsertAll(breedResponse.fromResponseToEntity()) }
+
+            currentPage++
 
             MediatorResult.Success(endOfPaginationReached = breedResponse.isEmpty())
         } catch (e: IOException) {

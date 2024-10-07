@@ -46,7 +46,7 @@ class HomeViewModelTest {
         // Given
         val breedList = createBreedList()
         every { mockBreedRepository.pager } returns breedList.fakePager()
-
+        every { mockBreedRepository.syncFavorites() } returns flowOf(true)
         // When
         createSut()
 
@@ -62,6 +62,7 @@ class HomeViewModelTest {
         val breedList = createBreedList()
         val filterBreed = breedList.random().toBreedUI()
         every { mockBreedRepository.pager } returns breedList.fakePager()
+        every { mockBreedRepository.syncFavorites() } returns flowOf(true)
 
         createSut()
 
@@ -81,6 +82,7 @@ class HomeViewModelTest {
         val breedUI = breedList.random().toBreedUI()
 
         every { mockBreedRepository.pager } returns breedList.fakePager()
+        every { mockBreedRepository.syncFavorites() } returns flowOf(true)
         every {
             mockBreedRepository.updateFavorite(
                 breedUI.id,
@@ -104,6 +106,7 @@ class HomeViewModelTest {
         val breedUI = breedList.random().toBreedUI()
 
         every { mockBreedRepository.pager } returns breedList.fakePager()
+        every { mockBreedRepository.syncFavorites() } returns flowOf(true)
 
         createSut()
 

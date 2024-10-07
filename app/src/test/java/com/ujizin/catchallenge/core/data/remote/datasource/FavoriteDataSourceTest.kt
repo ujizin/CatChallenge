@@ -102,4 +102,19 @@ class FavoriteDataSourceTest {
         coVerify(exactly = 1) { mockFavoriteService.deleteFavorite(favoriteId) }
         assertTrue(result)
     }
+
+    @Test
+    fun `given favorite, when get, then should return list of favorites`() = runTest {
+        // Given
+        val expected = List(10) { index ->
+            FavoriteResponse(index.toLong(), "breedId-$index")
+        }
+        coEvery { mockFavoriteService.getFavorites() } returns expected
+
+        // When
+        val result = sutDataSource.getFavorites().first()
+
+        // Then
+        assertEquals(expected, result)
+    }
 }

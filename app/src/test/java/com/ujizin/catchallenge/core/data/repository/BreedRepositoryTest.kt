@@ -88,10 +88,47 @@ class BreedRepositoryTest {
     }
 
     @Test
+    fun `given favorites, when synced, then should filter with remote values`() = runTest {
+        // Given
+        var breedList = createBreedEntityList()
+        val randomBreed = breedList.random()
+        val favoriteResponse = FavoriteResponse(id = Random.nextLong(), breedId = randomBreed.id)
+        val expectedValue = randomBreed.copy(favoriteId = favoriteResponse.id)
+
+        coEvery {
+            mockBreedDao.updateFavorite(
+                id = favoriteResponse.breedId!!,
+                favoriteId = favoriteResponse.id
+            )
+        } just Runs
+
+        every { mockFavoriteSource.getFavorites() } returns flowOf(listOf(favoriteResponse))
+        coEvery { mockBreedDao.removeAllFavorite() } answers {
+            breedList = breedList.map { it.copy(favoriteId = null) }
+        }
+        coEvery { mockBreedDao.getFavoritesBreed() } answers { flowOf(listOf(expectedValue)) }
+
+        // When
+        val response = sutRepository.getFavorites().first()
+
+        // Then
+        coVerify(exactly = 1) { mockBreedDao.removeAllFavorite() }
+        coVerify(exactly = 1) {
+            mockBreedDao.updateFavorite(
+                id = favoriteResponse.breedId!!,
+                favoriteId = favoriteResponse.id
+            )
+        }
+        coVerify(exactly = 1) { mockBreedDao.getFavoritesBreed() }
+        assertEquals(listOf(expectedValue.toDomain()), response)
+    }
+
+    @Test
     fun `given favorites, when local favorites, then should return favorite list`() = runTest {
         // Given
         val expected = createBreedEntityList()
         every { mockBreedDao.getFavoritesBreed() } returns flowOf(expected)
+        every { mockFavoriteSource.getFavorites() } returns flowOf(emptyList())
 
         // When
         val response = sutRepository.getFavorites().first()

@@ -17,6 +17,11 @@
 - Retrofit
 - Room
 - Mockk
+- Kover 
+
+## Journey
+
+To learn more about the development of CatChallenge, including known issues and solutions, you can read about it [here](/journey.md).
 
 ## Open API
 

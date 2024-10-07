@@ -3,13 +3,13 @@ package com.ujizin.catchallenge.core.data.remote.datasource
 import com.ujizin.catchallenge.core.data.BreedDataModelUtils.createBreedResponseList
 import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.remote.service.BreedService
-import com.ujizin.catchallenge.core.data.remote.service.FavoriteService
 import com.ujizin.catchallenge.core.test.MainCoroutineRule
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +25,7 @@ class BreedDataSourceTest {
     private lateinit var mockBreedService: BreedService
 
     @MockK
-    private lateinit var mockFavoriteService: FavoriteService
+    private lateinit var mockFavoriteDataSource: FavoriteDataSource
 
     private lateinit var sutDataSource: BreedDataSource
 
@@ -35,7 +35,7 @@ class BreedDataSourceTest {
 
         sutDataSource = BreedDataSource(
             breedService = mockBreedService,
-            favoriteService = mockFavoriteService,
+            favoriteDataSource = mockFavoriteDataSource,
             dispatcher = mainCoroutineRule.dispatcher
         )
     }
@@ -52,7 +52,7 @@ class BreedDataSourceTest {
         }
 
         coEvery { mockBreedService.getBreeds(TEST_LIMIT_PAGE, TEST_PAGE) } returns breedList
-        coEvery { mockFavoriteService.getFavorites() } returns favorites
+        coEvery { mockFavoriteDataSource.getFavorites() } returns flowOf(favorites)
 
         // When
         val actualBreedList = sutDataSource.getBreeds(TEST_LIMIT_PAGE, TEST_PAGE).first()

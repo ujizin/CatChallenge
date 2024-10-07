@@ -2,6 +2,7 @@ package com.ujizin.catchallenge.core.data.remote.datasource
 
 import com.ujizin.catchallenge.core.data.remote.model.FavoritePayload
 import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
+import com.ujizin.catchallenge.core.data.remote.provider.DeviceIdProvider
 import com.ujizin.catchallenge.core.data.remote.service.FavoriteService
 import com.ujizin.catchallenge.core.test.MainCoroutineRule
 import io.mockk.MockKAnnotations
@@ -32,6 +33,9 @@ class FavoriteDataSourceTest {
     @MockK
     private lateinit var mockFavoriteService: FavoriteService
 
+    @MockK
+    private lateinit var mockDeviceIdProvider: DeviceIdProvider
+
     private lateinit var sutDataSource: FavoriteDataSource
 
     @Before
@@ -39,6 +43,7 @@ class FavoriteDataSourceTest {
         MockKAnnotations.init(this)
         sutDataSource = FavoriteDataSource(
             favoriteService = mockFavoriteService,
+            deviceIdProvider = mockDeviceIdProvider,
             dispatcher = mainCoroutineRule.dispatcher
         )
     }
@@ -46,10 +51,12 @@ class FavoriteDataSourceTest {
     @Test
     fun `given favorite, when sent, then should call service`() = runTest {
         // Given
+        val deviceId = UUID.randomUUID().toString()
         val imageId = UUID.randomUUID().toString()
         val favoriteId = Random.nextLong()
+        every { mockDeviceIdProvider() } returns deviceId
         coEvery {
-            mockFavoriteService.sendFavorite(FavoritePayload(imageId))
+            mockFavoriteService.sendFavorite(FavoritePayload(imageId, deviceId))
         } returns FavoriteResponse(favoriteId)
 
         // When
@@ -104,17 +111,24 @@ class FavoriteDataSourceTest {
     }
 
     @Test
-    fun `given favorite, when get, then should return list of favorites`() = runTest {
+    fun `given favorite, when get, then should return filter list of favorites`() = runTest {
         // Given
-        val expected = List(10) { index ->
-            FavoriteResponse(index.toLong(), "breedId-$index")
+        val deviceId = UUID.randomUUID().toString()
+        val favoriteResponse = List(10) { index ->
+            FavoriteResponse(
+                index.toLong(),
+                "breedId-$index",
+                userId = deviceId.takeIf { index % 2 == 0 },
+            )
         }
-        coEvery { mockFavoriteService.getFavorites() } returns expected
+        val expectedList = favoriteResponse.filter { it.userId != null }
+        every { mockDeviceIdProvider() } returns deviceId
+        coEvery { mockFavoriteService.getFavorites() } returns favoriteResponse
 
         // When
         val result = sutDataSource.getFavorites().first()
 
         // Then
-        assertEquals(expected, result)
+        assertEquals(expectedList, result)
     }
 }

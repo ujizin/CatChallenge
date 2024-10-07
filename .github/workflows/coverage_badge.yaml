@@ -14,8 +14,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'zulu'
+          java-version: '11'
+          distribution: 'adopt'
 
       - name: Enable KVM group perms
         run: |
@@ -25,8 +25,7 @@ jobs:
 
       - name: Generate coverage output
         run: |
-          COVERAGE=$(${GITHUB_WORKSPACE}/gradlew -q printLineCoverage)
-          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
+          echo "COVERAGE=$(${{github.workspace}}/gradlew -q printLineCoverage)" >> $GITHUB_ENV
 
       - name: Update dynamic badge gist
         uses: schneegans/dynamic-badges-action@v1.7.0

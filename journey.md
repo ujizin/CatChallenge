@@ -1,10 +1,13 @@
 # Journey
 
-Hi! This page provides an overview of how the project has been developed, along with the challenges faced and solutions implemented for each release.
+Hi! This page provides an overview of how the project has been developed, along with the challenges
+faced and solutions implemented for each release.
 
 ## How it was planned
 
-[The CatAPI](https://thecatapi.com/) was selected as the provider for this project. The technology stack was chosen based on modern architectural development principles. For the initial MVP (0.1.0), features such as modularization, integration tests, and end-to-end (E2E) testing were postponed.
+[The CatAPI](https://thecatapi.com/) was selected as the provider for this project. The technology
+stack was chosen based on modern architectural development principles. For the initial MVP (0.1.0),
+features such as modularization, integration tests, and end-to-end (E2E) testing were postponed.
 
 ## Release 0.1.0
 
@@ -12,9 +15,11 @@ Hi! This page provides an overview of how the project has been developed, along 
 
 #### Favorite - Unique User vs Shared User
 
-Initially, the first attempt was not using the `sub_id` field in the Favorite RESTful API. However, it was observed that favorites were being shared across devices. 
+Initially, the first attempt was not using the `sub_id` field in the Favorite RESTful API. However,
+it was observed that favorites were being shared across devices.
 
-To resolve this issue, It was implemented the use of the Android ID (hardware) to ensure that favorites remain unique to each user.
+To resolve this issue, It was implemented the use of the Android ID (hardware) to ensure that
+favorites remain unique to each user.
 
 **Side Benefit**: When the app is re-downloaded on the device, the favorites are restored.
 
@@ -41,6 +46,33 @@ solution by creating an ImageInterceptor.
 The approach for the interceptor is as follows: when the request is for a CDN URL, it first attempts
 to retrieve the image with the `.jpg` suffix. If this fails, the interceptor then tries the `.png`
 suffix.
+
+---
+
+#### Favorite - ImageId is the new breedId
+
+In the CatAPI Favorites RESTful API, when posting a favorite, it's possible to include two fields in
+the body:
+
+```
+{
+    "image_id": "hBXicehMA", // required
+    "sub_id": "my-user-1234" // Optional, used for user Id in Application
+}
+```
+
+However, some breed items do not have a `reference_image_id` (for example, the "European Burmese"),
+which means that `image_id` cannot be used in this case. To address this, `breedId` was used instead
+of `imageId`.
+
+Note: I tried to use POST `v1/images/upload` but I could not making it works, the error was:
+
+```
+ Classifcation failed: correct animal not found. - Bad Request
+```
+
+As a result, it was switched to using `breedId`. Moreover, even with manual POST requests, the user
+experience when a new `API_KEY` is used is not ideal, as users cannot upload photos.
 
 ---
 

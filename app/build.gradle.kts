@@ -139,6 +139,7 @@ kover {
         annotatedBy(
             "androidx.compose.ui.tooling.preview.Preview",
             "kotlinx.serialization.Serializable",
+            "com.ujizin.catchallenge.core.test.IgnoreKover"
         )
     }
 }

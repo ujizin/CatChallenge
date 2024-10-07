@@ -11,23 +11,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Red,
-    secondary = Red,
-    background = Black,
-    onBackground = White
+    primary = Red40,
+    secondary = Red40,
+    onBackground = Gray,
+    secondaryContainer = Red80,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Red,
-    secondary = Red,
-    background = White,
-    onBackground = Black
+    primary = Red40,
+    secondary = Red40,
+    background = Gray,
+    onBackground = Black,
+    surfaceContainerHighest = Red10,
+    surfaceContainerLow = White,
+    surface = White,
+    surfaceContainer = White,
+    secondaryContainer = Red20,
 )
 
 @Composable
 fun CatChallengeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

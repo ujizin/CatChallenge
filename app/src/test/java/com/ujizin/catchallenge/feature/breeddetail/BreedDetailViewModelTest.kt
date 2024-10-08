@@ -3,7 +3,6 @@ package com.ujizin.catchallenge.feature.breeddetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.ujizin.catchallenge.core.data.repository.BreedRepository
-import com.ujizin.catchallenge.core.data.repository.model.Breed
 import com.ujizin.catchallenge.core.navigation.destination.Destination.BreedDetail
 import com.ujizin.catchallenge.core.navigation.destination.Destination.BreedDetail.Companion.typeMap
 import com.ujizin.catchallenge.core.test.MainCoroutineRule

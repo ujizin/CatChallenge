@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.ujizin.catchallenge.R
+import com.ujizin.catchallenge.core.ui.R
 import com.ujizin.catchallenge.core.ui.components.CenterLoading
 import com.ujizin.catchallenge.core.ui.components.EnterAlwaysTopBar
 import com.ujizin.catchallenge.core.ui.components.TextField
@@ -29,7 +29,6 @@ import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 import com.ujizin.catchallenge.feature.home.HomeViewModel
 import com.ujizin.catchallenge.feature.home.ui.components.CatPagerList
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.retry
 
 @Composable
 fun HomeScreen(

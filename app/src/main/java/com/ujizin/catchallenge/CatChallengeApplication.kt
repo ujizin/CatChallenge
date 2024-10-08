@@ -3,7 +3,7 @@ package com.ujizin.catchallenge
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import com.ujizin.catchallenge.core.ui.factory.CoilImageFactory
+import com.ujizin.catchallenge.core.factory.CoilImageFactory
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

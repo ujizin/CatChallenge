@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ujizin.catchallenge.R
+import com.ujizin.catchallenge.core.ui.R
 import com.ujizin.catchallenge.core.ui.components.ImageCard
 import com.ujizin.catchallenge.core.ui.model.BreedUI
 

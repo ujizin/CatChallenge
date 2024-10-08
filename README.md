@@ -28,8 +28,9 @@
 
 ## How to build
 
-1. Set the `API_KEY` in your `local.properties` file.
-1. To obtain your `API_KEY`, please visit [The Cat API](https://thecatapi.com/).
+1. Use Android Studio Ladybug or a newer version.
+2. Set the `API_KEY` in your `local.properties` file. 
+3. To obtain your `API_KEY`, please visit [The Cat API](https://thecatapi.com/).
 
 ## Journey
 

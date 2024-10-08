@@ -2,7 +2,6 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 tasks.register("printLineCoverage") {
     group = "verification" // Put into the same group as the `kover` tasks
-    dependsOn("koverXmlReport")
     doLast {
         val report = file("$buildDir/reports/kover/report.xml")
 

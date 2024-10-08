@@ -20,7 +20,10 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Generate coverage output
+      - name: Run Kover
+        run: ./gradlew koverXmlReport
+
+      - name: Get Coverage Result
         run: |
           {
             echo 'COVERAGE<<EOF'

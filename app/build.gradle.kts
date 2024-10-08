@@ -17,6 +17,13 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 
+if (localProperties["API_KEY"] == null) {
+    throw StopExecutionException("""
+        You must specify a valid API_KEY in the local.properties file to proceed.
+        To obtain your API_KEY, please visit The Cat API at https://thecatapi.com 
+    """.trimIndent())
+}
+
 android {
     namespace = "com.ujizin.catchallenge"
     compileSdk = 34

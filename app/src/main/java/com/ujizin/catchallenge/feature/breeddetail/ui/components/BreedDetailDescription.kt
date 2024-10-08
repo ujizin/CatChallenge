@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import com.ujizin.catchallenge.R
+import com.ujizin.catchallenge.core.ui.R
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
 
 @Composable

@@ -1,5 +1,7 @@
 ![Test](https://github.com/ujizin/catchallenge/actions/workflows/android_test.yaml/badge.svg)
 
+![Test Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ujizin/a68ec96497181fba241ee66de0fdefae/raw/cat-challenge-coverage-badge.json)
+
 # Cat Challenge
 
 <p align="center">

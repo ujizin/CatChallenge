@@ -20,7 +20,7 @@ class ImageInterceptor @Inject constructor() : Interceptor {
         formats: List<ImageFormat> = ImageFormat.entries,
         currentFormat: ImageFormat = formats.first(),
     ): Response {
-        val newRequest = originalRequest.newBuilder()
+        val newRequest = Request.Builder()
             .url("${originalRequest.url}.${currentFormat.format}")
             .build()
 

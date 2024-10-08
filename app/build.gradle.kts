@@ -17,12 +17,14 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 
-if (localProperties["API_KEY"] == null) {
-    throw StopExecutionException("""
+val apiKey: String = localProperties["API_KEY"]?.toString()
+    ?: System.getenv("API_KEY")
+    ?: throw StopExecutionException(
+        """
         You must specify a valid API_KEY in the local.properties file to proceed.
         To obtain your API_KEY, please visit The Cat API at https://thecatapi.com 
-    """.trimIndent())
-}
+    """.trimIndent()
+    )
 
 android {
     namespace = "com.ujizin.catchallenge"
@@ -39,7 +41,7 @@ android {
 
         buildConfigField("String", "CDN_URL", "\"https://cdn2.thecatapi.com/images\"")
         buildConfigField("String", "BASE_URL", "\"https://api.thecatapi.com\"")
-        buildConfigField("String", "API_KEY", "${localProperties["API_KEY"]}")
+        buildConfigField("String", "API_KEY", apiKey)
     }
 
     buildTypes {

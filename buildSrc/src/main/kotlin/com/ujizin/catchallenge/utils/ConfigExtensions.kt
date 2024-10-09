@@ -2,6 +2,7 @@ package com.ujizin.catchallenge.utils
 
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.ujizin.catchallenge.AppVersion
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.tasks.StopExecutionException
@@ -9,9 +10,9 @@ import java.util.Properties
 
 fun BaseAppModuleExtension.configApplication(rootProject: Project) = with(rootProject) {
     defaultConfig {
-        applicationId = "com.ujizin.catchallenge"
-        versionCode = 2
-        versionName = "0.2.0"
+        applicationId = AppVersion.APP_ID
+        versionCode = AppVersion.VERSION_CODE
+        versionName = AppVersion.VERSION_NAME
     }
     configAndroid(project)
 }

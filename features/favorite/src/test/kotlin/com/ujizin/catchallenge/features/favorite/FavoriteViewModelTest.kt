@@ -84,14 +84,13 @@ class FavoriteViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.favorites.ui.FavoriteUIEvent.OnBreedClick(breedUI))
+        sutViewModel.onEvent(FavoriteUIEvent.OnBreedClick(breedUI))
 
         // Then
         coVerify(exactly = 0) { mockBreedRepository.updateFavorite(any(), any()) }
     }
 
     private fun createSut() {
-        sutViewModel =
-            com.ujizin.catchallenge.features.favorites.FavoriteViewModel(mockBreedRepository)
+        sutViewModel = FavoriteViewModel(mockBreedRepository)
     }
 }

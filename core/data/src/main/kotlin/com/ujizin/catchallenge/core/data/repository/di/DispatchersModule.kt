@@ -12,6 +12,6 @@ import kotlinx.coroutines.Dispatchers
 object DispatchersModule {
 
     @Provides
-    @com.ujizin.catchallenge.core.data.repository.dispatcher.IoDispatcher
+    @IoDispatcher
     fun providesIODispatcher() = Dispatchers.IO
 }

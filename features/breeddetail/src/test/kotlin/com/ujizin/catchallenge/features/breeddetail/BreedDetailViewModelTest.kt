@@ -109,10 +109,7 @@ class BreedDetailViewModelTest {
     }
 
     private fun createSut() {
-        sutViewModel = BreedDetailViewModel(
-            mockBreedRepository,
-            mockSavedStateHandle
-        )
+        sutViewModel = BreedDetailViewModel(mockBreedRepository, mockSavedStateHandle)
     }
 
     companion object {

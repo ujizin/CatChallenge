@@ -9,9 +9,11 @@ import androidx.paging.RemoteMediator
 import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
 import com.ujizin.catchallenge.core.data.repository.BreedRepository
+import com.ujizin.catchallenge.core.model.Breed
 import com.ujizin.catchallenge.core.test.rules.MainCoroutineRule
 import com.ujizin.catchallenge.core.test.utils.BreedFeatureModelUtils.createBreedList
 import com.ujizin.catchallenge.core.ui.mapper.toBreedUI
+import com.ujizin.catchallenge.features.home.ui.HomeUIEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.every
@@ -52,7 +54,7 @@ class HomeViewModelTest {
         val uiState = sutViewModel.uiState.first()
         val actualList = uiState.paging.asSnapshot()
 
-        assertEquals(breedList.map(com.ujizin.catchallenge.core.model.Breed::toBreedUI), actualList)
+        assertEquals(breedList.map(Breed::toBreedUI), actualList)
     }
 
     @Test
@@ -65,7 +67,7 @@ class HomeViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.home.ui.HomeUIEvent.OnSearch(filterBreed.name))
+        sutViewModel.onEvent(HomeUIEvent.OnSearch(filterBreed.name))
 
         // Then
         val uiState = sutViewModel.uiState.first()
@@ -90,7 +92,7 @@ class HomeViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.home.ui.HomeUIEvent.OnBreedFavorite(breedUI, !breedUI.isFavorite))
+        sutViewModel.onEvent(HomeUIEvent.OnBreedFavorite(breedUI, !breedUI.isFavorite))
 
         // Given
         coVerify(exactly = 1) {
@@ -109,7 +111,7 @@ class HomeViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.home.ui.HomeUIEvent.OnBreedClick(breedUI))
+        sutViewModel.onEvent(HomeUIEvent.OnBreedClick(breedUI))
 
         // Given
         coVerify(exactly = 0) { mockBreedRepository.updateFavorite(any(), any()) }
@@ -120,13 +122,13 @@ class HomeViewModelTest {
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    private fun List<com.ujizin.catchallenge.core.model.Breed>.fakePager() =
+    private fun List<Breed>.fakePager() =
         Pager(
             config = PagingConfig(pageSize = size),
-            remoteMediator = object : RemoteMediator<Int, com.ujizin.catchallenge.core.model.Breed>() {
+            remoteMediator = object : RemoteMediator<Int, Breed>() {
                 override suspend fun load(
                     loadType: LoadType,
-                    state: PagingState<Int, com.ujizin.catchallenge.core.model.Breed>
+                    state: PagingState<Int, Breed>
                 ): MediatorResult {
                     return MediatorResult.Success(true)
                 }

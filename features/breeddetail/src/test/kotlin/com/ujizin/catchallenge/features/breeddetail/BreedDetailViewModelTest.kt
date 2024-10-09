@@ -8,6 +8,7 @@ import com.ujizin.catchallenge.core.navigation.destination.Destination.BreedDeta
 import com.ujizin.catchallenge.core.test.rules.MainCoroutineRule
 import com.ujizin.catchallenge.core.test.utils.BreedFeatureModelUtils.createBreedList
 import com.ujizin.catchallenge.core.ui.mapper.toBreedUI
+import com.ujizin.catchallenge.features.breeddetail.ui.BreedDetailUIEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -80,7 +81,7 @@ class BreedDetailViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.breeddetail.ui.BreedDetailUIEvent.OnFavoriteChanged(expectedIsFavorite))
+        sutViewModel.onEvent(BreedDetailUIEvent.OnFavoriteChanged(expectedIsFavorite))
 
         // Then
         coVerify {
@@ -101,7 +102,7 @@ class BreedDetailViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.breeddetail.ui.BreedDetailUIEvent.BackPressed)
+        sutViewModel.onEvent(BreedDetailUIEvent.BackPressed)
 
         // Then
         coVerify(exactly = 0) { mockBreedRepository.updateFavorite(any(), any()) }

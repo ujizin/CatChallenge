@@ -2,6 +2,7 @@ package com.ujizin.core.data.remote.datasource
 
 import com.ujizin.catchallenge.core.data.remote.datasource.FavoriteDataSource
 import com.ujizin.catchallenge.core.data.remote.model.FavoritePayload
+import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.remote.provider.DeviceIdProvider
 import com.ujizin.catchallenge.core.data.remote.service.FavoriteService
 import com.ujizin.catchallenge.core.test.rules.MainCoroutineRule
@@ -57,7 +58,7 @@ class FavoriteDataSourceTest {
         every { mockDeviceIdProvider() } returns deviceId
         coEvery {
             mockFavoriteService.sendFavorite(FavoritePayload(imageId, deviceId))
-        } returns com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse(favoriteId)
+        } returns FavoriteResponse(favoriteId)
 
         // When
         val result = sutDataSource.sendFavorite(imageId, null).first()
@@ -115,7 +116,7 @@ class FavoriteDataSourceTest {
         // Given
         val deviceId = UUID.randomUUID().toString()
         val favoriteResponse = List(10) { index ->
-            com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse(
+            FavoriteResponse(
                 index.toLong(),
                 "breedId-$index",
                 userId = deviceId.takeIf { index % 2 == 0 },

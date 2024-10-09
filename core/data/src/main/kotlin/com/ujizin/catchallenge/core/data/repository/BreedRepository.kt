@@ -88,7 +88,7 @@ class BreedRepository @Inject constructor(
         }
     }.map { favoriteId -> breed.copy(favoriteId = favoriteId) }
 
-    private suspend fun List<com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse>.updateFavorites() = forEach {
+    private suspend fun List<FavoriteResponse>.updateFavorites() = forEach {
         if (it.breedId == null) return@forEach
         breedDao.updateFavorite(it.breedId, it.id)
     }

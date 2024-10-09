@@ -3,6 +3,7 @@ package com.ujizin.core.data.remote.datasource
 import com.ujizin.core.data.BreedDataModelUtils.createBreedResponseList
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
 import com.ujizin.catchallenge.core.data.remote.datasource.FavoriteDataSource
+import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.remote.service.BreedService
 import com.ujizin.catchallenge.core.test.rules.MainCoroutineRule
 import io.mockk.MockKAnnotations
@@ -46,7 +47,7 @@ class BreedDataSourceTest {
         // Given
         val breedList = createBreedResponseList(TEST_LIMIT_PAGE)
         val favorites = breedList.take(Random.nextInt(TEST_LIMIT_PAGE)).mapIndexed { index, breed ->
-            com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse(
+            FavoriteResponse(
                 index.toLong(),
                 breedId = breed.id
             )

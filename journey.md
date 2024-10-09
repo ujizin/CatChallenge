@@ -3,13 +3,35 @@
 Hi! This page provides an overview of how the project has been developed, along with the challenges
 faced and solutions implemented for each release.
 
-## How it was planned
+## Development Strategy
 
-[The CatAPI](https://thecatapi.com/) was selected as the provider for this project. The technology
-stack was chosen based on modern architectural development principles. For the initial MVP (0.1.0),
-features such as modularization, integration tests, and end-to-end (E2E) testing were postponed.
+The development strategy for the app includes:
+
+- Using [The CatAPI](https://thecatapi.com/) as the data provider for the project.
+- Building the stack based on Modern Android Development (MAD) principles.
 
 ## Release 0.1.0
+
+### Architecture overview
+
+The project is currently structured as a single module, organized into packages. A single module was
+chosen for now to speed up the delivery of the first MVP version.
+
+The architecture follows a reactive programming model
+with [UDF](https://developer.android.com/topic/architecture/ui-layer#udf).
+
+#### Overview:
+
+- **core**
+    - **data**: Manages the data layer, handling data sources (e.g., APIs, databases) and utilizing
+      coroutines and flows to ensure reactive and asynchronous.
+    - **navigation**: Defines the navigation structure, bottom navigation bar and destinations
+    - **ui**: Provides UI components and UI models as the foundation
+      **test**: Contains utilities and helpers for unit testing.
+- **feature**
+    - **home**: Main screen functionality with cat's breeds paging
+    - **breeddetail**: Detailed breed information
+    - **favorite**:  Manages the functionality to the user's favorite breeds
 
 ### Issues & Solutions
 

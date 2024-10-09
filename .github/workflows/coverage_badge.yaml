@@ -21,7 +21,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Run Kover
-        run: ./gradlew koverXmlReport
+        run: ./gradlew app:koverXmlReport
 
       - name: Get Coverage Result
         run: |

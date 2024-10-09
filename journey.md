@@ -10,12 +10,7 @@ The development strategy for the app includes:
 - Using [The CatAPI](https://thecatapi.com/) as the data provider for the project.
 - Building the stack based on Modern Android Development (MAD) principles.
 
-## Release 0.1.0
-
-### Architecture overview
-
-The project is currently structured as a single module, organized into packages. A single module was
-chosen for now to speed up the delivery of the first MVP version.
+## Architecture overview
 
 The architecture follows a reactive programming model
 with [UDF](https://developer.android.com/topic/architecture/ui-layer#udf).
@@ -32,6 +27,29 @@ with [UDF](https://developer.android.com/topic/architecture/ui-layer#udf).
     - **home**: Main screen functionality with cat's breeds paging
     - **breeddetail**: Detailed breed information
     - **favorite**:  Manages the functionality to the user's favorite breeds
+
+## Release 0.2.0
+
+- **Modularization**: Separated the previously single module, which was organized by packages, into
+  multiple modules, breaking away from the monolithic structure. Some of the benefits include:
+  of a monolithic, some of the benefits:
+    - **Scalability**: In tightly connected code, small changes can require widespread updates.
+      Modularization separates responsibilities, giving developers more autonomy and enforcing
+      design patterns.
+    - **Encapsulation**: Isolated code is easier to understand, test, and maintain.
+    - **Faster Build Time**: Gradle’s parallel and incremental builds reduce build times.
+    - **Reusability**: Modularization allows for code reuse, enabling multiple apps across platforms
+      from the same codebase.
+- **Precompiled plugins**: Precompiled plugins allow you to define and reuse custom Gradle plugin
+  logic as a first-class, self-contained module. Instead of writing repetitive configuration in the
+  main build files
+
+## Release 0.1.0
+
+### Architecture
+
+The project is currently structured as a single module, organized into packages. A single module was
+chosen for now to speed up the delivery of the first MVP version.
 
 ### Issues & Solutions
 

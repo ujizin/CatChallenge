@@ -20,8 +20,8 @@ import com.ujizin.catchallenge.core.ui.model.BreedUI
 
 @Composable
 internal fun CatPagerList(
-    modifier: Modifier,
     pagingItems: LazyPagingItems<BreedUI>,
+    modifier: Modifier = Modifier,
     onErrorRetryClick: () -> Unit,
     onBreedClick: (BreedUI) -> Unit,
     onFavoriteBreedChanged: (BreedUI, Boolean) -> Unit,
@@ -45,8 +45,8 @@ internal fun CatPagerList(
                 name = item.name,
                 imageUrl = item.imageUrl,
                 isFavorite = item.isFavorite,
-                onFavoriteChanged = { onFavoriteBreedChanged(item, it) },
-                onClick = { onBreedClick(item) }
+                onClick = { onBreedClick(item) },
+                onFavoriteChanged = { onFavoriteBreedChanged(item, it) }
             )
         }
 

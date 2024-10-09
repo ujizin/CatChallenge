@@ -1,6 +1,12 @@
 package com.ujizin.catchallenge.core.ui.theme
 
+import android.annotation.SuppressLint
 import android.os.Build
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -8,7 +14,10 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
+import com.ujizin.catchallenge.core.ui.composition.LocalNavAnimatedVisibilityScope
+import com.ujizin.catchallenge.core.ui.composition.LocalSharedTransitionScope
 
 private val DarkColorScheme = darkColorScheme(
     primary = Red40,
@@ -50,4 +59,22 @@ fun CatChallengeTheme(
         typography = Typography,
         content = content
     )
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
+@Composable
+fun CatChallengeThemeForPreview(content: @Composable AnimatedContentScope.() -> Unit) {
+    SharedTransitionLayout {
+        AnimatedContent(MutableTransitionState(true)) { _ ->
+            CompositionLocalProvider(
+                LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                LocalNavAnimatedVisibilityScope provides this,
+            ) {
+                CatChallengeTheme {
+                    content()
+                }
+            }
+        }
+    }
 }

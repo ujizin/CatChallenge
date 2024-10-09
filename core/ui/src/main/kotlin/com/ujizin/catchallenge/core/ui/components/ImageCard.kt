@@ -1,5 +1,6 @@
 package com.ujizin.catchallenge.core.ui.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,8 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.composition.LocalNavAnimatedVisibilityScope
+import com.ujizin.catchallenge.core.ui.composition.LocalSharedTransitionScope
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ImageCard(
     name: String,
@@ -47,10 +51,17 @@ fun ImageCard(
     ) {
         Column {
             AsyncImage(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.surface)
-                    .fillMaxWidth()
-                    .aspectRatio(1F),
+                modifier = with(LocalSharedTransitionScope.current) {
+                    Modifier
+                        .background(MaterialTheme.colorScheme.surface)
+                        .fillMaxWidth()
+                        .aspectRatio(1F)
+                        .sharedElement(
+                            state = rememberSharedContentState(name),
+                            animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current,
+                            clipInOverlayDuringTransition = OverlayClip(RoundedCornerShape(16.dp)),
+                        )
+                },
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(imageUrl)
                     .build(),
@@ -119,16 +130,16 @@ private fun CardRow(
 @Preview
 @Composable
 private fun BreedCardPreview() {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         var favorite by remember { mutableStateOf(false) }
         ImageCard(
-            modifier = Modifier.width(256.dp),
             name = "Dragon Li",
             imageUrl = "imageUrl",
-            subLabel = "sub label",
             isFavorite = favorite,
+            onClick = {},
+            modifier = Modifier.width(256.dp),
+            subLabel = "sub label",
             onFavoriteChanged = { favorite = it },
-            onClick = {}
         )
     }
 }

@@ -1,14 +1,11 @@
 package com.ujizin.catchallenge.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ujizin.catchallenge.core.navigation.CatChallengeBottomNavigation
@@ -31,39 +28,34 @@ fun CatChallengeNavigation(modifier: Modifier = Modifier) {
             )
         }
     ) { innerPadding ->
-        NavHost(
-            modifier = Modifier.padding(innerPadding),
-            navController = navController,
-            startDestination = Destination.Home,
-        ) {
-            composable<Destination.Home>(
-                exitTransition = { ExitTransition.None },
-                enterTransition = { EnterTransition.None }
+        CatChallengeSharedTransitionLayout(Modifier.padding(innerPadding)) {
+            NavHost(
+                navController = navController,
+                startDestination = Destination.Home,
             ) {
-                HomeScreen(
-                    onNavigateToBreedDetail = { breed ->
-                        navController.navigate(Destination.BreedDetail(breed))
-                    }
-                )
-            }
-            composable<Destination.Favorite>(
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None }
-            ) {
-                FavoriteScreen(
-                    onNavigateToBreedDetail = { breed ->
-                        navController.navigate(Destination.BreedDetail(breed))
-                    }
-                )
-            }
-            composable<Destination.BreedDetail>(
-                enterTransition = { EnterTransition.None },
-                typeMap = Destination.BreedDetail.typeMap
-            ) {
-                BreedDetailScreen(
-                    onBackPressed = navController::navigateUp
-                )
+                animatedComposable<Destination.Home> {
+                    HomeScreen(
+                        onNavigateToBreedDetail = { breed ->
+                            navController.navigate(Destination.BreedDetail(breed))
+                        }
+                    )
+                }
+                animatedComposable<Destination.Favorite> {
+                    FavoriteScreen(
+                        onNavigateToBreedDetail = { breed ->
+                            navController.navigate(Destination.BreedDetail(breed))
+                        }
+                    )
+                }
+                animatedComposable<Destination.BreedDetail>(
+                    typeMap = Destination.BreedDetail.typeMap
+                ) {
+                    BreedDetailScreen(
+                        onBackPressed = navController::navigateUp
+                    )
+                }
             }
         }
     }
 }
+

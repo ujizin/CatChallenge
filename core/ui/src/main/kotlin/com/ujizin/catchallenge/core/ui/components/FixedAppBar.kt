@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +42,7 @@ fun FixedAppBar(
 @Preview
 @Composable
 private fun FixedAppBarPreview(@PreviewParameter(LoremIpsum::class) loremIpsum: String) {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         FixedAppBar(
             modifier = Modifier
                 .fillMaxSize()

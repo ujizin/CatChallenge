@@ -26,7 +26,7 @@ import com.ujizin.catchallenge.core.ui.components.CenterLoading
 import com.ujizin.catchallenge.core.ui.components.EnterAlwaysTopBar
 import com.ujizin.catchallenge.core.ui.components.TextField
 import com.ujizin.catchallenge.core.ui.model.BreedUI
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 import com.ujizin.catchallenge.features.home.HomeViewModel
 import com.ujizin.catchallenge.features.home.ui.components.CatPagerList
 import kotlinx.coroutines.flow.Flow
@@ -103,7 +103,7 @@ fun HomeContent(
 @Preview
 @Composable
 private fun HomeContentPreview() {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         val pagingDataFlow = snapshotFlow { PagingData.empty<BreedUI>() }
         HomeContent(
             isLoading = true,

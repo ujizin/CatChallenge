@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ujizin.catchallenge.core.ui.R
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @Composable
 fun FavoriteEmptyContainer(
@@ -32,7 +32,7 @@ fun FavoriteEmptyContainer(
 @Preview(showSystemUi = true)
 @Composable
 private fun FavoriteEmptyContainerPreview() {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         FavoriteEmptyContainer(
             modifier = Modifier
                 .fillMaxSize()

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @Composable
 fun CenterLoading(modifier: Modifier = Modifier) {
@@ -22,7 +22,7 @@ fun CenterLoading(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CenterLoadingPreview() {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         CenterLoading(Modifier.fillMaxSize())
     }
 }

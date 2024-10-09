@@ -18,7 +18,7 @@ import com.ujizin.catchallenge.core.ui.components.CenterLoading
 import com.ujizin.catchallenge.core.ui.components.EnterAlwaysTopBar
 import com.ujizin.catchallenge.core.ui.model.BreedUI
 import com.ujizin.catchallenge.core.ui.preview.BreedListParameterProvider
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 import com.ujizin.catchallenge.features.favorites.FavoriteViewModel
 import com.ujizin.catchallenge.features.favorites.ui.components.FavoriteEmptyContainer
 import com.ujizin.catchallenge.features.favorites.ui.components.LazyGridListBreed
@@ -67,7 +67,7 @@ fun FavoriteContent(
                     .fillMaxSize()
                     .padding(24.dp)
             )
-            
+
             else -> LazyGridListBreed(
                 modifier = modifier,
                 breedList = favoriteList,
@@ -86,7 +86,7 @@ private fun FavoriteContentPreview(
     @PreviewParameter(BreedListParameterProvider::class)
     breedList: List<BreedUI>
 ) {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         FavoriteContent(
             isLoading = false,
             favoriteList = breedList,

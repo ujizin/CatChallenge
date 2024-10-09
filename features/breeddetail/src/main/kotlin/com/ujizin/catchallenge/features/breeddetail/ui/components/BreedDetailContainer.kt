@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.ujizin.catchallenge.core.ui.R
 import com.ujizin.catchallenge.core.ui.model.BreedUI
 import com.ujizin.catchallenge.core.ui.preview.BreedParameterProvider
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @Composable
 fun BreedDetailContainer(
@@ -51,7 +51,7 @@ fun BreedDetailContainer(
 private fun BreedDetailContainerPreview(
     @PreviewParameter(BreedParameterProvider::class) breed: BreedUI,
 ) {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         var isFavorite by remember { mutableStateOf(breed.isFavorite) }
         BreedDetailContainer(
             modifier = Modifier.padding(16.dp),

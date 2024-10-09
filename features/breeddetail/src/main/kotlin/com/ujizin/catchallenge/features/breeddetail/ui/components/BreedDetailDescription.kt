@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.ujizin.catchallenge.core.ui.R
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @Composable
 fun BreedDetailTopic(
@@ -33,7 +33,7 @@ fun BreedDetailTopic(
 private fun BreedDetailDescriptionPreview(
     @PreviewParameter(LoremIpsum::class) loremIpsum: String,
 ) {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         BreedDetailTopic(
             title = stringResource(R.string.description_label),
             description = loremIpsum,

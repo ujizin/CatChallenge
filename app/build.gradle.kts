@@ -85,7 +85,6 @@ dependencies {
     implementation(libs.bundles.androidx.compose)
     implementation(libs.androidx.material3)
     implementation(libs.coil)
-    implementation(libs.androidx.core.test.ktx)
     debugImplementation(libs.bundles.androidx.compose.debug)
 
     // Core
@@ -106,6 +105,7 @@ dependencies {
     // Unit Test
     testImplementation(libs.bundles.unit.test)
     testImplementation(libs.androidx.paging.testing.android)
+    testImplementation(libs.androidx.core.test.ktx)
     testImplementation(libs.robolectric)
 
     // UI Test

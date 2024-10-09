@@ -1,6 +1,6 @@
 package com.ujizin.catchallenge.core.data.remote.interceptor
 
-import com.ujizin.core.data.BuildConfig
+import com.ujizin.catchallenge.core.data.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

@@ -7,6 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
     implementation(libs.coroutines.test)
     implementation(libs.junit)
 }

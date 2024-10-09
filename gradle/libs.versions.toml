@@ -24,6 +24,10 @@ coil = "2.7.0"
 pagingTestingAndroid = "3.3.2"
 kover = "0.8.3"
 robolectric = "4.13"
+agpVersion = "8.6.1"
+kotlinVersion = "1.9.24"
+appcompat = "1.7.0"
+material = "1.12.0"
 
 [libraries]
 
@@ -34,6 +38,7 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 ksp-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 compose-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
+kover-plugin = { group = "org.jetbrains.kotlinx", name = "kover-gradle-plugin", version.ref = "kover" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

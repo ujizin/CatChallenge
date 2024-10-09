@@ -3,9 +3,10 @@ plugins {
 }
 
 dependencies {
-//    implementation(project(":core:navigation"))
-//    implementation(project(":core:ui"))
-//    implementation(project(":core:themes"))
-//    testImplementation(project(":core:test"))
-//    androidTestImplementation(project(":core:test"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
+    implementation(project(":core:navigation"))
+    implementation(project(":core:ui"))
+    testImplementation(project(":core:test"))
+    androidTestImplementation(project(":core:test"))
 }

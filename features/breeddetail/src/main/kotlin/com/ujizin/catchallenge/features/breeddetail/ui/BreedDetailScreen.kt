@@ -1,10 +1,12 @@
 package com.ujizin.catchallenge.features.breeddetail.ui
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -17,14 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ujizin.catchallenge.core.ui.components.FixedAppBar
+import com.ujizin.catchallenge.core.ui.composition.LocalNavAnimatedVisibilityScope
+import com.ujizin.catchallenge.core.ui.composition.LocalSharedTransitionScope
 import com.ujizin.catchallenge.core.ui.model.BreedUI
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.preview.BreedParameterProvider
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 import com.ujizin.catchallenge.features.breeddetail.BreedDetailViewModel
 import com.ujizin.catchallenge.features.breeddetail.ui.components.BreedDetailContainer
 
@@ -50,6 +56,7 @@ fun BreedDetailScreen(
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun BreedDetailContent(
     breedUI: BreedUI,
@@ -66,9 +73,16 @@ fun BreedDetailContent(
         title = { Text(breedUI.name) }
     ) {
         AsyncImage(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1F),
+            modifier = with(LocalSharedTransitionScope.current) {
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1F)
+                    .sharedElement(
+                        state = rememberSharedContentState(breedUI.name),
+                        animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current,
+                        clipInOverlayDuringTransition = OverlayClip(RoundedCornerShape(0.dp)),
+                    )
+            },
             model = ImageRequest.Builder(LocalContext.current)
                 .data(breedUI.imageUrl)
                 .build(),
@@ -89,8 +103,13 @@ fun BreedDetailContent(
 
 @Preview
 @Composable
-private fun BreedDetailContentPreview() {
-    CatChallengeTheme {
-//        BreedDetailContent()
+private fun BreedDetailContentPreview(
+    @PreviewParameter(BreedParameterProvider::class) breedUI: BreedUI,
+) {
+    CatChallengeThemeForPreview {
+        BreedDetailContent(
+            breedUI = breedUI,
+            onEvent = {},
+        )
     }
 }

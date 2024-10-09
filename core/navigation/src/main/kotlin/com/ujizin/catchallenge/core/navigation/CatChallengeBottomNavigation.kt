@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import com.ujizin.catchallenge.core.navigation.destination.BottomDestination
 import com.ujizin.catchallenge.core.navigation.utils.hasRoute
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @Composable
 fun CatChallengeBottomNavigation(
@@ -75,7 +75,7 @@ private fun RowScope.NavigationItem(
 @Preview
 @Composable
 private fun CatChallengeBottomNavigationPreview() {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         CatChallengeBottomNavigation(
             modifier = Modifier,
             currentDestination = null,

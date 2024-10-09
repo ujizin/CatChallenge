@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ujizin.catchallenge.core.ui.R
-import com.ujizin.catchallenge.core.ui.theme.CatChallengeTheme
+import com.ujizin.catchallenge.core.ui.theme.CatChallengeThemeForPreview
 
 @Composable
 fun HomeErrorContainer(
@@ -38,7 +38,7 @@ fun HomeErrorContainer(
 @Preview(showBackground = true)
 @Composable
 private fun HomeErrorContainerPreview() {
-    CatChallengeTheme {
+    CatChallengeThemeForPreview {
         HomeErrorContainer(
             modifier = Modifier.fillMaxSize(),
             onRetryClick = {}

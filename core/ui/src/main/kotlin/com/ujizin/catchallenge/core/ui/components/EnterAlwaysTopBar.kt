@@ -41,7 +41,9 @@ fun EnterAlwaysTopBar(
                 windowInsets = WindowInsets(top = 0.dp, right = 16.dp, bottom = 0.dp, left = 0.dp),
                 title = {
                     Column(
-                        modifier = Modifier.padding(vertical = 8.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(vertical = 8.dp),
                         content = header,
                     )
                 },
@@ -75,7 +77,7 @@ private fun TopAppBarContentPreview() {
                     contentPadding = PaddingValues(16.dp),
                 ) {
                     items(list) { text ->
-                        Text(text = text,)
+                        Text(text = text)
                     }
                 }
             },

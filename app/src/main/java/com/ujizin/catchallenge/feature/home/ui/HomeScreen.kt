@@ -1,6 +1,7 @@
 package com.ujizin.catchallenge.feature.home.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -70,15 +71,17 @@ fun HomeContent(
                 text = stringResource(R.string.home_label),
                 style = MaterialTheme.typography.headlineMedium
             )
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                value = searchText,
-                placeholder = { Text(stringResource(R.string.search_label)) },
-                onValueChange = { onEvent(HomeUIEvent.OnSearch(it)) },
-                leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) }
-            )
+            AnimatedVisibility(!isLoading) {
+                TextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    value = searchText,
+                    placeholder = { Text(stringResource(R.string.search_label)) },
+                    onValueChange = { onEvent(HomeUIEvent.OnSearch(it)) },
+                    leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) }
+                )
+            }
         },
         content = {
             when {

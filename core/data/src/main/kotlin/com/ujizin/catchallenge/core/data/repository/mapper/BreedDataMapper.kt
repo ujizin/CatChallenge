@@ -3,8 +3,8 @@ package com.ujizin.catchallenge.core.data.repository.mapper
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
 import com.ujizin.catchallenge.core.data.remote.model.ImageId
-import com.ujizin.catchallenge.core.data.repository.model.Breed
-import com.ujizin.core.data.BuildConfig
+import com.ujizin.catchallenge.core.model.Breed
+import com.ujizin.catchallenge.core.data.BuildConfig
 
 internal fun List<BreedResponse>.fromResponseToEntity(): List<BreedEntity> =
     map(BreedResponse::toEntity)

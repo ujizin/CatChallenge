@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import androidx.room.Update
 import androidx.room.Upsert
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
-//import com.ujizin.catchallenge.core.test.IgnoreKover
+import com.ujizin.catchallenge.core.data.utils.IgnoreKover
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -35,7 +35,7 @@ interface BreedDao {
     suspend fun upsertAll(breeds: List<BreedEntity>)
 
     @Transaction
-//    @IgnoreKover
+    @IgnoreKover
     suspend fun withTransaction(block: suspend BreedDao.() -> Unit) {
         block()
     }

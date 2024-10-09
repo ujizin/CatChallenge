@@ -1,6 +1,6 @@
 package com.ujizin.catchallenge.core.data.remote.di
 
-import com.ujizin.core.data.BuildConfig
+import com.ujizin.catchallenge.core.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

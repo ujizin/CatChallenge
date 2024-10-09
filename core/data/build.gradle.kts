@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ujizin.core.data"
+    namespace = "com.ujizin.catchallenge.core.data"
 }
 
 dependencies {

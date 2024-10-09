@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.hilt.plugin)
     implementation(libs.ksp.plugin)
     implementation(libs.compose.plugin)
+    implementation(libs.kover.plugin)
 }

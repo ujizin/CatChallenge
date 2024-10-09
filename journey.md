@@ -28,6 +28,13 @@ with [UDF](https://developer.android.com/topic/architecture/ui-layer#udf).
     - **breeddetail**: Detailed breed information
     - **favorite**:  Manages the functionality to the user's favorite breeds
 
+## Release 0.3.0
+
+- **Shared Elements**: Jetpack Compose navigation brings the ability to create seamless animations
+  between different screens, improving the user experience by allowing shared elements to smoothly
+  transition as users navigate through the app. Check
+  more [here](https://developer.android.com/develop/ui/compose/animation/shared-elements)
+
 ## Release 0.2.0
 
 - **Modularization**: Separated the previously single module, which was organized by packages, into

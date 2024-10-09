@@ -27,6 +27,7 @@ kover {
             "**.BuildConfig.*",
             "**.ComposableSingletons*.*",
             "**.ComposableSingletons\$*",
+            "**.CatChallengeApplication",
             "**.ui.preview.**",
             "**.ui.themes.**",
             "**.ui.utils.**",

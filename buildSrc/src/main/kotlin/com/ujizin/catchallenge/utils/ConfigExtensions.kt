@@ -10,8 +10,8 @@ import java.util.Properties
 fun BaseAppModuleExtension.configApplication(rootProject: Project) = with(rootProject) {
     defaultConfig {
         applicationId = "com.ujizin.catchallenge"
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "0.2.0"
     }
     configAndroid(project)
 }

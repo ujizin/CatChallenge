@@ -33,7 +33,7 @@ object BreedDataModelUtils {
     }
 
     fun createBreedList(size: Int = DEFAULT_VALUE) = List(size) { index ->
-        com.ujizin.catchallenge.core.model.Breed(
+        Breed(
             id = "id-$index",
             name = "name-$index",
             description = "description-$index",
@@ -45,7 +45,7 @@ object BreedDataModelUtils {
         )
     }
 
-    fun com.ujizin.catchallenge.core.model.Breed.toEntity() = BreedEntity(
+    fun Breed.toEntity() = BreedEntity(
         id = id,
         name = name,
         description = description,

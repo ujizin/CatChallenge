@@ -1,10 +1,12 @@
 package com.ujizin.catchallenge.features.favorite
 
 import com.ujizin.catchallenge.core.data.repository.BreedRepository
+import com.ujizin.catchallenge.core.model.Breed
 import com.ujizin.catchallenge.core.test.rules.MainCoroutineRule
 import com.ujizin.catchallenge.core.test.utils.BreedFeatureModelUtils.createBreedList
 import com.ujizin.catchallenge.core.ui.mapper.toBreedUI
 import com.ujizin.catchallenge.features.favorites.FavoriteViewModel
+import com.ujizin.catchallenge.features.favorites.ui.FavoriteUIEvent
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -47,7 +49,7 @@ class FavoriteViewModelTest {
         val uiState = sutViewModel.uiState.first()
 
         assertFalse(uiState.isLoading)
-        assertEquals(breedList.map(com.ujizin.catchallenge.core.model.Breed::toBreedUI), uiState.favoriteList)
+        assertEquals(breedList.map(Breed::toBreedUI), uiState.favoriteList)
     }
 
     @Test
@@ -55,7 +57,7 @@ class FavoriteViewModelTest {
         // Given
         val breedList = createBreedList()
         every { mockBreedRepository.getFavorites() } returns flowOf(breedList)
-        val breedUI = breedList.map(com.ujizin.catchallenge.core.model.Breed::toBreedUI).random()
+        val breedUI = breedList.map(Breed::toBreedUI).random()
 
         coEvery {
             mockBreedRepository.updateFavorite(breedUI.id, !breedUI.isFavorite)
@@ -64,7 +66,7 @@ class FavoriteViewModelTest {
         createSut()
 
         // When
-        sutViewModel.onEvent(com.ujizin.catchallenge.features.favorites.ui.FavoriteUIEvent.OnFavoriteChanged(breedUI, !breedUI.isFavorite))
+        sutViewModel.onEvent(FavoriteUIEvent.OnFavoriteChanged(breedUI, !breedUI.isFavorite))
 
         // Then
         coVerify {

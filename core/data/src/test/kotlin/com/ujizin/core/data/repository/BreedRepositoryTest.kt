@@ -2,20 +2,21 @@ package com.ujizin.core.data.repository
 
 import androidx.paging.testing.asPagingSourceFactory
 import androidx.paging.testing.asSnapshot
-import com.ujizin.core.data.BreedDataModelUtils.createBreedEntityList
-import com.ujizin.core.data.BreedDataModelUtils.createBreedList
-import com.ujizin.core.data.BreedDataModelUtils.createBreedResponseList
-import com.ujizin.core.data.BreedDataModelUtils.toEntity
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
 import com.ujizin.catchallenge.core.data.remote.datasource.FavoriteDataSource
+import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.repository.BreedRepository
 import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToDomain
 import com.ujizin.catchallenge.core.data.repository.mapper.fromResponseToEntity
 import com.ujizin.catchallenge.core.data.repository.mapper.toDomain
 import com.ujizin.catchallenge.core.model.Breed
 import com.ujizin.catchallenge.core.test.rules.MainCoroutineRule
+import com.ujizin.core.data.BreedDataModelUtils.createBreedEntityList
+import com.ujizin.core.data.BreedDataModelUtils.createBreedList
+import com.ujizin.core.data.BreedDataModelUtils.createBreedResponseList
+import com.ujizin.core.data.BreedDataModelUtils.toEntity
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -77,7 +78,7 @@ class BreedRepositoryTest {
         coEvery { mockBreedDataSource.getBreeds(any(), any()) } returns flowOf(expected)
 
         // When
-        val actual = mutableListOf<com.ujizin.catchallenge.core.model.Breed>()
+        val actual = mutableListOf<Breed>()
         sutRepository.pager.asSnapshot().toCollection(actual)
 
         // Then
@@ -92,7 +93,7 @@ class BreedRepositoryTest {
         // Given
         var breedList = createBreedEntityList()
         val randomBreed = breedList.random()
-        val favoriteResponse = com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse(
+        val favoriteResponse = FavoriteResponse(
             id = Random.nextLong(),
             breedId = randomBreed.id
         )
@@ -147,8 +148,7 @@ class BreedRepositoryTest {
         val expectedBreed = createBreedList(1).first()
         val expectedFavorite = true
 
-        val expectedResponse =
-            com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse(id = Random.nextLong())
+        val expectedResponse = FavoriteResponse(id = Random.nextLong())
         val entryBreedEntity = expectedBreed.toEntity()
         val expectedBreedEntity = entryBreedEntity.copy(favoriteId = expectedResponse.id)
 
@@ -198,8 +198,8 @@ class BreedRepositoryTest {
 
     private fun mockBreedFavorite(
         entryBreedEntity: BreedEntity,
-        expectedBreed: com.ujizin.catchallenge.core.model.Breed,
-        expectedResponse: com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse? = null,
+        expectedBreed: Breed,
+        expectedResponse: FavoriteResponse? = null,
         expectedBreedEntity: BreedEntity,
         expectedUpdateResult: Int = 1,
         deleteResult: Boolean = true,

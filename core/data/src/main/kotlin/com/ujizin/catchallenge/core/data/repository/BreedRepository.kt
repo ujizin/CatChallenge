@@ -5,9 +5,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
+import com.ujizin.catchallenge.core.data.local.dao.BreedDao.Companion.INVALID_ID
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
 import com.ujizin.catchallenge.core.data.remote.datasource.FavoriteDataSource
+import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
 import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.repository.dispatcher.IoDispatcher
 import com.ujizin.catchallenge.core.data.repository.mapper.toDomain
@@ -22,23 +24,19 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.sync.Mutex
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 @OptIn(ExperimentalCoroutinesApi::class)
 class BreedRepository @Inject constructor(
-    breedDataSource: BreedDataSource,
+    private val breedDataSource: BreedDataSource,
     private val favoriteDataSource: FavoriteDataSource,
     private val breedDao: BreedDao,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
-
-    private val mutex = Mutex()
 
     @OptIn(ExperimentalPagingApi::class)
     val pager = Pager(
@@ -51,6 +49,14 @@ class BreedRepository @Inject constructor(
     ).flow.map { pagingData ->
         pagingData.map(BreedEntity::toDomain)
     }.flowOn(dispatcher)
+
+    fun searchBreeds(search: String) = breedDataSource.searchBreeds(search)
+        .onStart { check(search.isNotBlank()) { "Search text must not be null" } }
+        .map { breeds ->
+            Result.success(breeds.map(BreedResponse::toDomain))
+        }.catch {
+            emit(Result.failure(it))
+        }.flowOn(dispatcher)
 
     fun getFavorites() = combine(
         syncFavorites(),
@@ -70,13 +76,11 @@ class BreedRepository @Inject constructor(
         id: String,
         isFavorite: Boolean
     ): Flow<Boolean> = flow { emit(breedDao.findBreed(id)) }
-        .onStart { if (!mutex.isLocked) mutex.lock() }
-        .mapNotNull { checkNotNull(it) { "breed must not be null to update" } }
+        .mapNotNull { checkNotNull(it) { "Breed must not be null to update" } }
         .flatMapConcat { breed -> updateFavoriteInternal(breed, isFavorite) }
-        .map { breed -> breedDao.updateBreed(breed) != -1 }
+        .map { breed -> breedDao.updateBreed(breed) != INVALID_ID }
         .catch { emit(false) }
-        .onCompletion { if (mutex.isLocked) mutex.unlock() }
-        .flowOn(dispatcher)
+        .flowOn(dispatcher.limitedParallelism(PARALLELISM_THREADS))
 
     private fun updateFavoriteInternal(
         breed: BreedEntity,
@@ -91,5 +95,9 @@ class BreedRepository @Inject constructor(
     private suspend fun List<FavoriteResponse>.updateFavorites() = forEach {
         if (it.breedId == null) return@forEach
         breedDao.updateFavorite(it.breedId, it.id)
+    }
+
+    companion object {
+        private const val PARALLELISM_THREADS = 1
     }
 }

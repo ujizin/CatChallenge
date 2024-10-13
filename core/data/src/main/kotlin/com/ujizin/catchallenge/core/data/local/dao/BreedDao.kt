@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BreedDao {
 
-    @Query("SELECT * FROM breeds")
+    @Query("SELECT * FROM breeds ORDER by name ASC")
     fun getBreedsPagingSource(): PagingSource<Int, BreedEntity>
 
     @Query("SELECT * from breeds where favorite_id is NOT null")
@@ -38,5 +38,9 @@ interface BreedDao {
     @IgnoreKover
     suspend fun withTransaction(block: suspend BreedDao.() -> Unit) {
         block()
+    }
+
+    companion object {
+        internal const val INVALID_ID = -1
     }
 }

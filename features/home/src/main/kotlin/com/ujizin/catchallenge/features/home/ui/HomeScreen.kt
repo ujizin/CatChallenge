@@ -2,6 +2,7 @@ package com.ujizin.catchallenge.features.home.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -67,11 +69,16 @@ fun HomeContent(
 
     EnterAlwaysTopBar(
         header = {
+            val transitionState = remember {
+                MutableTransitionState(false).apply {
+                    targetState = true
+                }
+            }
             Text(
                 text = stringResource(R.string.home_label),
                 style = MaterialTheme.typography.headlineMedium
             )
-            AnimatedVisibility(!isLoading) {
+            AnimatedVisibility(transitionState) {
                 TextField(
                     modifier = Modifier
                         .fillMaxWidth()

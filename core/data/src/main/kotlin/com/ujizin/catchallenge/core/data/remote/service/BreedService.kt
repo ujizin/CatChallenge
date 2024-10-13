@@ -11,4 +11,9 @@ interface BreedService {
         @Query("limit") limit: Int,
         @Query("page") page: Int,
     ): List<BreedResponse>
+
+    @GET("v1/breeds/search")
+    suspend fun searchBreeds(
+        @Query("q") search: String,
+    ): List<BreedResponse>
 }

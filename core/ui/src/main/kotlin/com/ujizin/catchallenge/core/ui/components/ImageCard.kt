@@ -59,7 +59,12 @@ fun ImageCard(
                         .sharedElement(
                             state = rememberSharedContentState(name),
                             animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current,
-                            clipInOverlayDuringTransition = OverlayClip(RoundedCornerShape(16.dp)),
+                            clipInOverlayDuringTransition = OverlayClip(
+                                RoundedCornerShape(
+                                    topStart = 16.dp,
+                                    topEnd = 16.dp
+                                )
+                            ),
                         )
                 },
                 model = ImageRequest.Builder(LocalContext.current)

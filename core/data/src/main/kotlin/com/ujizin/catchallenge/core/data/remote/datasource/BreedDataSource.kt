@@ -27,6 +27,10 @@ class BreedDataSource @Inject constructor(
         emit(breedService.getBreeds(limit, page))
     }.mapFavorites().flowOn(dispatcher)
 
+    fun searchBreeds(search: String): Flow<List<BreedResponse>> = flow {
+        emit(breedService.searchBreeds(search))
+    }.mapFavorites().flowOn(dispatcher)
+
     private fun Flow<List<BreedResponse>>.mapFavorites() = map { breeds ->
         val favorites = favoriteDataSource.getFavorites().first()
         breeds.map breedsMap@{ breed ->

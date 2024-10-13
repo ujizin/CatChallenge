@@ -19,6 +19,7 @@ internal fun BreedResponse.toEntity() = BreedEntity(
     description = description,
     imageUrl = imageId?.toImageUrl(),
     favoriteId = favoriteId,
+    isFavorite = favoriteId != null,
     lifeSpan = lifeSpan,
 )
 
@@ -30,7 +31,7 @@ internal fun BreedEntity.toDomain() = Breed(
     description = description,
     imageUrl = imageUrl,
     lifeSpan = lifeSpan,
-    isFavorite = favoriteId != null,
+    isFavorite = isFavorite,
 )
 
 internal fun BreedResponse.toDomain() = Breed(

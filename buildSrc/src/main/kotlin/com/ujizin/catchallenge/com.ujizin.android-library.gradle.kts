@@ -27,6 +27,7 @@ dependencies {
 
     implementation(libs.findLibrary("hilt").get())
     ksp(libs.findLibrary("hilt-compiler").get())
-
+    ksp(libs.findLibrary("hilt-android-compiler").get())
+    implementation(libs.findBundle("work-manager").get())
     testImplementation(libs.findBundle("unit-test").get())
 }

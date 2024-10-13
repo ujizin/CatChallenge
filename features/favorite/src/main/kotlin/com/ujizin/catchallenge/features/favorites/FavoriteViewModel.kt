@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    val repository: BreedRepository,
+    private val repository: BreedRepository,
 ) : ViewModel() {
 
     val uiState = repository.getFavorites().map {

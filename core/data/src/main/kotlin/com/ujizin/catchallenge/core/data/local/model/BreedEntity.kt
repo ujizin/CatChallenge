@@ -18,4 +18,6 @@ data class BreedEntity(
     val favoriteId: Long?,
     @ColumnInfo("life_span")
     val lifeSpan: String,
+    @ColumnInfo("is_favorite")
+    val isFavorite: Boolean,
 )

@@ -5,12 +5,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.map
 import com.ujizin.catchallenge.core.data.local.dao.BreedDao
-import com.ujizin.catchallenge.core.data.local.dao.BreedDao.Companion.INVALID_ID
 import com.ujizin.catchallenge.core.data.local.model.BreedEntity
 import com.ujizin.catchallenge.core.data.remote.datasource.BreedDataSource
 import com.ujizin.catchallenge.core.data.remote.datasource.FavoriteDataSource
 import com.ujizin.catchallenge.core.data.remote.model.BreedResponse
-import com.ujizin.catchallenge.core.data.remote.model.FavoriteResponse
 import com.ujizin.catchallenge.core.data.repository.dispatcher.IoDispatcher
 import com.ujizin.catchallenge.core.data.repository.mapper.toDomain
 import com.ujizin.catchallenge.core.data.repository.mediator.BreedRemoteMediator
@@ -18,13 +16,11 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,6 +33,8 @@ class BreedRepository @Inject constructor(
     private val breedDao: BreedDao,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
+
+    private val limitedDispatch = dispatcher.limitedParallelism(PARALLELISM_THREADS)
 
     @OptIn(ExperimentalPagingApi::class)
     val pager = Pager(
@@ -58,19 +56,9 @@ class BreedRepository @Inject constructor(
             emit(Result.failure(it))
         }.flowOn(dispatcher)
 
-    fun getFavorites() = combine(
-        syncFavorites(),
-        breedDao.getFavoritesBreed()
-    ) { _, localFavorites ->
+    fun getFavorites() = breedDao.getFavoritesBreed().map { localFavorites ->
         localFavorites.map(BreedEntity::toDomain)
     }.flowOn(dispatcher)
-
-    fun syncFavorites() = favoriteDataSource.getFavorites()
-        .onEach { breedDao.removeAllFavorite() }
-        .map { remoteFavorites ->
-            remoteFavorites.updateFavorites()
-            true
-        }.catch { emit(false) }
 
     fun updateFavorite(
         id: String,
@@ -78,24 +66,32 @@ class BreedRepository @Inject constructor(
     ): Flow<Boolean> = flow { emit(breedDao.findBreed(id)) }
         .mapNotNull { checkNotNull(it) { "Breed must not be null to update" } }
         .flatMapConcat { breed -> updateFavoriteInternal(breed, isFavorite) }
-        .map { breed -> breedDao.updateBreed(breed) != INVALID_ID }
-        .catch { emit(false) }
-        .flowOn(dispatcher.limitedParallelism(PARALLELISM_THREADS))
+        .flowOn(limitedDispatch)
 
-    private fun updateFavoriteInternal(
+    internal fun getRemoteFavorites() = favoriteDataSource
+        .getFavorites()
+        .flowOn(dispatcher)
+
+    internal fun updateFavoriteInternal(
         breed: BreedEntity,
-        isFavorite: Boolean
-    ): Flow<BreedEntity> = when {
-        isFavorite -> favoriteDataSource.sendFavorite(breed.id, breed.favoriteId).map { it.id }
+        isFavorite: Boolean,
+    ): Flow<Boolean> = when {
+        isFavorite -> favoriteDataSource.sendFavorite(
+            breedId = breed.id,
+            favoriteId = breed.favoriteId,
+        ).map { favorite -> favorite.id }
+
         else -> favoriteDataSource.deleteFavorite(breed.favoriteId).map { result ->
             breed.favoriteId.takeUnless { result }
         }
-    }.map { favoriteId -> breed.copy(favoriteId = favoriteId) }
-
-    private suspend fun List<FavoriteResponse>.updateFavorites() = forEach {
-        if (it.breedId == null) return@forEach
-        breedDao.updateFavorite(it.breedId, it.id)
-    }
+    }.onStart {
+        breedDao.updateBreed(breed.copy(isFavorite = isFavorite))
+    }.map { favoriteId ->
+        breedDao.updateFavorite(breed.id, favoriteId)
+        true
+    }.catch {
+        emit(false)
+    }.flowOn(limitedDispatch)
 
     companion object {
         private const val PARALLELISM_THREADS = 1

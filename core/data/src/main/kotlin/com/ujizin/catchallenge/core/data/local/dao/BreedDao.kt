@@ -16,8 +16,11 @@ interface BreedDao {
     @Query("SELECT * FROM breeds ORDER by name ASC")
     fun getBreedsPagingSource(): PagingSource<Int, BreedEntity>
 
-    @Query("SELECT * from breeds where favorite_id is NOT null")
+    @Query("SELECT * from breeds where is_favorite = 1")
     fun getFavoritesBreed(): Flow<List<BreedEntity>>
+
+    @Query("SELECT * from breeds where (favorite_id is null AND is_favorite = 1) or (favorite_id is NOT null AND is_favorite = 0)")
+    fun getUnsyncedFavorites(): Flow<List<BreedEntity>>
 
     @Query("SELECT * from breeds where id = :id")
     suspend fun findBreed(id: String): BreedEntity?
@@ -29,7 +32,7 @@ interface BreedDao {
     suspend fun removeAllFavorite()
 
     @Query("UPDATE breeds set favorite_id = :favoriteId where id = :id")
-    suspend fun updateFavorite(id: String, favoriteId: Long)
+    suspend fun updateFavorite(id: String, favoriteId: Long?)
 
     @Upsert
     suspend fun upsertAll(breeds: List<BreedEntity>)
@@ -38,9 +41,5 @@ interface BreedDao {
     @IgnoreKover
     suspend fun withTransaction(block: suspend BreedDao.() -> Unit) {
         block()
-    }
-
-    companion object {
-        internal const val INVALID_ID = -1
     }
 }

@@ -61,11 +61,7 @@ class HomeViewModel @Inject constructor(
         searchText.isBlank() || it.name.contains(searchText, ignoreCase = true)
     }
 
-    val uiState = combine(
-        repository.syncFavorites(),
-        _searchTextState,
-        _loadingState
-    ) { _, searchText, isLoading ->
+    val uiState = combine(_searchTextState, _loadingState) { searchText, isLoading ->
         HomeUIState(
             isLoading = isLoading,
             paging = paging,
